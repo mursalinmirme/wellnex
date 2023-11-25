@@ -26,7 +26,7 @@ const PopularCampusSection = () => {
     <div style={{ width: "80%", margin: "0 auto" }}>
       <Box textAlign={"center"} sx={{mt: '60px'}}>
         <Typography
-          sx={{ fontSize: "32px", fontWeight: "600", color: "#03045E" }}
+          sx={{ fontSize: "32px", fontWeight: "600" }}
         >
           Popular Medical Camps
         </Typography>

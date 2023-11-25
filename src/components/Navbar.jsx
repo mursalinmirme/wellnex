@@ -14,6 +14,8 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link, NavLink } from 'react-router-dom';
 import './Navbar.css';
+import useAuth from '../hooks/useAuth';
+import toast from 'react-hot-toast';
 // const pages = ["Home", "Available Camps", "Dashboard", "Contact  Us"];
 const pages = [
   {
@@ -33,9 +35,10 @@ const pages = [
     path: '/contact_us'
   }
 ]
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
 const Navbar = () => {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const { user, logoutUser, loading } = useAuth();
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -52,8 +55,18 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const handleLogOUt = () => {
+    logoutUser()
+    .then(() => {
+      toast.success("Logout successfully");
+    })
+    .catch((error) => {
+      toast.error(error.message)
+    })
+  }
+  console.log(loading);
     return (
-        <AppBar style={{background: 'linear-gradient(90deg, rgba(3,4,94,0.9360994397759104) 0%, rgba(0,150,199,0.8884803921568627) 47%, rgba(121,147,149,1) 100%)', padding: '11px 0'}} position="static">
+        <AppBar style={{background: 'linear-gradient(90deg, rgba(3,4,94,0.9329061624649859) 0%, rgba(0,150,193,0.88) 53%, rgba(0,119,182,1) 100%)', padding: '11px 0'}} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
@@ -149,22 +162,16 @@ const Navbar = () => {
             </NavLink>
             ))}
           </Box>
-          <Box display={'flex'} gap={'30px'}>
-            <Link to={'/signup'}>
-            <Button sx={{bgcolor: '#00B4D8', color: '#ffffff', fontWeight: '600', py: '8px','&:hover': {background: '#0096C7', color: '#ffffff'}}} variant='contained'>Signup</Button>
-            </Link>
-            <Link to={'/signin'}>
-            <Button sx={{bgcolor: '#00B4D8', color: '#ffffff', fontWeight: '600', py: '8px','&:hover': {background: '#0096C7', color: '#ffffff'}}} variant='contained'>Login</Button>
-            </Link>
-          </Box>
-          {/* <Box sx={{ flexGrow: 0 }}>
+          {
+            user ? <>
+            <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar sx={{border: '4px solid #e6e6e6'}} alt="Remy Sharp" src={user?.photoURL} />
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '45px' }}
+              sx={{ mt: '55px'}}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -179,13 +186,34 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem>
+                  <Typography py={'5px'} width={'200px'} textAlign="center">Profile</Typography>
+              </MenuItem>
+              <MenuItem>
+                  <Typography py={'5px'} width={'200px'} textAlign="center">Account</Typography>
+              </MenuItem>
+              <MenuItem>
+                  <Typography py={'5px'} width={'200px'} textAlign="center">Dashboard</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleLogOUt}>
+                  <Typography py={'5px'} bgcolor={'#0077B6'} color={'white'} width={'200px'} textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
-          </Box> */}
+          </Box>
+            </>
+            : 
+            <>
+            <Box display={'flex'} gap={'30px'}>
+            <Link to={'/signup'}>
+            <Button sx={{bgcolor: '#00B4D8', color: '#ffffff', fontWeight: '600', py: '8px','&:hover': {background: '#0096C7', color: '#ffffff'}}} variant='contained'>Signup</Button>
+            </Link>
+            <Link to={'/signin'}>
+            <Button sx={{bgcolor: '#00B4D8', color: '#ffffff', fontWeight: '600', py: '8px','&:hover': {background: '#0096C7', color: '#ffffff'}}} variant='contained'>Login</Button>
+            </Link>
+            </Box>
+            </>
+          }
+
         </Toolbar>
       </Container>
     </AppBar>

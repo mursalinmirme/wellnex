@@ -14,7 +14,8 @@ import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
 const Signin = () => {
   const [errorMsg, setErrorMsg] = React.useState('');
-  const { signinUserByEmail } = useAuth();
+  const { signinUserByEmail, user } = useAuth();
+  console.log('the current user is', user);
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
