@@ -47,7 +47,7 @@ const WellnessBlogs = () => {
 
 
       </Grid>
-      <Box sx={{textAlign: 'center', mt: '35px'}}>
+      <Box sx={{textAlign: 'center', mt: '45px'}}>
         <Button sx={{bgcolor: '#0077B6', color: '#ffffff', fontWeight: '600', py: '10px','&:hover': {background: '#0096C7', color: '#ffffff'}}} size="large" variant="contained">Show All Blogs</Button>
       </Box>
     </div>

@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import './Navbar.css';
 // const pages = ["Home", "Available Camps", "Dashboard", "Contact  Us"];
 const pages = [
@@ -75,7 +75,7 @@ const Navbar = () => {
               textDecoration: 'none',
             }}
           >
-            Well<span style={{color: '#48CAE4'}}>Ness</span>
+            Well<span style={{color: '#48CAE4'}}>Nex</span>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -131,7 +131,7 @@ const Navbar = () => {
               textDecoration: 'none',
             }}
           >
-            WellNess
+            WellNex
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: '20px' }}>
             {pages.map((page) => (
@@ -149,8 +149,15 @@ const Navbar = () => {
             </NavLink>
             ))}
           </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
+          <Box display={'flex'} gap={'30px'}>
+            <Link to={'/signup'}>
+            <Button sx={{bgcolor: '#00B4D8', color: '#ffffff', fontWeight: '600', py: '8px','&:hover': {background: '#0096C7', color: '#ffffff'}}} variant='contained'>Signup</Button>
+            </Link>
+            <Link to={'/signin'}>
+            <Button sx={{bgcolor: '#00B4D8', color: '#ffffff', fontWeight: '600', py: '8px','&:hover': {background: '#0096C7', color: '#ffffff'}}} variant='contained'>Login</Button>
+            </Link>
+          </Box>
+          {/* <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -178,7 +185,7 @@ const Navbar = () => {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box> */}
         </Toolbar>
       </Container>
     </AppBar>

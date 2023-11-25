@@ -4,6 +4,8 @@ import Home from "../pages/publicPages/home/Home";
 import AvailableCamps from "../pages/publicPages/home/AvailableCamps";
 import DashboardRoutes from "../pages/dashboard/dashboardRoutes/DashboardRoutes";
 import ContactUs from "../pages/publicPages/home/ContactUs";
+import Signup from "../pages/signup/Signup";
+import Signin from "../pages/signin/Signin";
 
 const router = createBrowserRouter([
     {
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
             {
                 path: 'contact_us',
                 element: <ContactUs></ContactUs>
+            },
+            {
+                path: 'signup',
+                element: <Signup></Signup>
+            },
+            {
+                path: 'signin',
+                element: <Signin></Signin>
             },
         ]
     },
