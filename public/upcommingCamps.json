@@ -1,0 +1,43 @@
+[
+    {
+      "id": 1,
+      "camp_name": "Wellness Checkup Camp",
+      "date": "2023-03-15",
+      "location": "City Park, Downtown",
+      "description": "Join us for a comprehensive wellness checkup camp featuring free health screenings, consultations, and informative sessions on maintaining a healthy lifestyle.",
+      "image": "wellness_checkup.jpg"
+    },
+    {
+      "id": 2,
+      "camp_name": "Community Health Day",
+      "date": "2023-04-22",
+      "location": "Community Center Auditorium",
+      "description": "Save the date for our Community Health Day! A day filled with health awareness, fitness activities, and engaging workshops for individuals and families.",
+      "image": "community_health_day.jpg"
+    },
+    {
+      "id": 3,
+      "camp_name": "Healthy Living Workshop",
+      "date": "2023-05-18",
+      "location": "Wellness Center, Main Street",
+      "description": "Explore the keys to a healthy lifestyle at our Healthy Living Workshop. Expert speakers, interactive sessions, and practical tips for a balanced life.",
+      "image": "healthy_living_workshop.jpg"
+    },
+    {
+      "id": 4,
+      "camp_name": "Family Wellness Expo",
+      "date": "2023-06-30",
+      "location": "Convention Center Hall A",
+      "description": "Mark your calendars for the Family Wellness Expo! A day dedicated to family health with specialized activities for children, adults, and seniors.",
+      "image": "family_wellness_expo.jpg"
+    },
+    {
+      "id": 5,
+      "camp_name": "Mind-Body Harmony Retreat",
+      "date": "2023-08-10",
+      "location": "Nature Retreat Center",
+      "description": "Embark on a journey to achieve mind-body harmony at our retreat. Yoga, meditation, and wellness sessions surrounded by nature's tranquility.",
+      "image": "mind_body_harmony_retreat.jpg"
+    }
+  ]
+  
