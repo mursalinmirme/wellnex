@@ -10,6 +10,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import signup from "../../assets/signup.jpg";
 import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 const Signup = () => {
   const [errorMsg, setErrorMsg] = React.useState('');
   const { createUser, updateUserProfile } = useAuth();
@@ -22,7 +23,6 @@ const Signup = () => {
     const email = data.get("email");
     const password = data.get("password");
     const profilePic = data.get("profilePic");
-    console.log(profilePic);
     // validations
     if(!name){
       setErrorMsg('Please enter your name');
@@ -53,11 +53,14 @@ const Signup = () => {
       return
     }
 
-
-
-    const creatAccount = await createUser(email, password);
-    const result = creatAccount.user;
-    console.log(result);
+    try{
+      const creatAccount = await createUser(email, password);
+      const result = creatAccount.user;
+      console.log(result);
+    }catch(error){
+      toast.error(error.message)
+      return
+    }
 
     const formData = new FormData();
     formData.append("image", profilePic);
@@ -68,14 +71,15 @@ const Signup = () => {
     );
     const uploadImgResp = await uploadImage.data;
 
-    console.log(uploadImgResp.data.display_url);
-
-    const updateProfileResponse = await updateUserProfile(
-      name,
-      uploadImgResp.data.display_url
-    );
-
-    console.log(updateProfileResponse);
+    try{
+      await updateUserProfile(
+        name,
+        uploadImgResp.data.display_url
+      );
+      toast.success('Registration successfull');
+    }catch(error){
+      toast.error(error.message);
+    }
 
 
   };

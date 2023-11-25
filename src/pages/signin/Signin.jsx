@@ -10,14 +10,41 @@ import Grid from '@mui/material/Grid';
 import signin from '../../assets/signin.jpg';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
+import toast from 'react-hot-toast';
 const Signin = () => {
-    const handleSubmit = (event) => {
+  const [errorMsg, setErrorMsg] = React.useState('');
+  const { signinUserByEmail } = useAuth();
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        const email = data.get('email');
+        const password = data.get('password');
         console.log({
-          email: data.get('email'),
-          password: data.get('password'),
+          email,
+          password
         });
+
+        if(!email){
+          setErrorMsg('Please enter your email');
+          return
+        }
+        if(!password){
+          setErrorMsg('Please enter your password');
+          return
+        }
+         
+        try{
+          const signinUser = await signinUserByEmail(email, password);
+          console.log(signinUser);
+          toast.success("Login Successfully");
+        }catch(error){
+          console.log(error);
+          toast.error(error.message)
+        }
+
+
+
       };
     return (
         <div style={{width: '80%', margin: '0 auto', marginTop: '40px'}}>
@@ -53,6 +80,11 @@ const Signin = () => {
             <Typography component="h1" fontWeight={'700'} variant="h5">
               Sign In
             </Typography>
+            {errorMsg && (
+              <Typography py={'10px'} color={'red'} component="p" fontWeight={"500"} variant="p">
+                {errorMsg}
+              </Typography>
+            )}
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
