@@ -11,9 +11,13 @@ import { Link } from "react-router-dom";
 import signup from "../../assets/signup.jpg";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import CircularProgress from '@mui/material/CircularProgress';
 const Signup = () => {
   const [errorMsg, setErrorMsg] = React.useState('');
   const { createUser, updateUserProfile } = useAuth();
+  const [createLoading, setCreatLoading] = React.useState(false);
+  const axiosPublic = useAxiosPublic();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -23,33 +27,41 @@ const Signup = () => {
     const email = data.get("email");
     const password = data.get("password");
     const profilePic = data.get("profilePic");
+    setCreatLoading(true);
     // validations
     if(!name){
       setErrorMsg('Please enter your name');
+      setCreatLoading(false);
       return
     }
     if(!email){
       setErrorMsg('Please enter your email');
+      setCreatLoading(false);
       return
     }
     if(!password){
       setErrorMsg('Please enter your password');
+      setCreatLoading(false);
       return
     }
     if(!/^.{6,}$/.test(password)){
       setErrorMsg('password should be at least 6 character ');
+      setCreatLoading(false);
       return
     }
     if(!profilePic.name){
       setErrorMsg('Please select you profile picture');
+      setCreatLoading(false);
       return
     }
     if (profilePic.type !== 'image/jpeg' && profilePic.type !== 'image/jpg' && profilePic.type !== 'image/png') {
       setErrorMsg('Please select jpeg, jpg or png format Image');
+      setCreatLoading(false);
       return;
     }
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
       setErrorMsg('Please enter a valid email');
+      setCreatLoading(false);
       return
     }
 
@@ -58,6 +70,7 @@ const Signup = () => {
       const result = creatAccount.user;
       console.log(result);
     }catch(error){
+      setCreatLoading(false);
       toast.error(error.message)
       return
     }
@@ -76,8 +89,18 @@ const Signup = () => {
         name,
         uploadImgResp.data.display_url
       );
+      // save user data into database
+      const usersData = {
+        name,
+        email,
+        image: uploadImgResp.data.display_url,
+        role: 'participants'
+      }
+      axiosPublic.post('/users', usersData);
+      setCreatLoading(false);
       toast.success('Registration successfull');
     }catch(error){
+      setCreatLoading(false);
       toast.error(error.message);
     }
 
@@ -187,7 +210,7 @@ const Signup = () => {
                     "&:hover": { background: "#0096C7", color: "#ffffff" },
                   }}
                 >
-                  Sign Up
+                 {createLoading ? <CircularProgress size={'28px'} sx={{color: '#ffffff'}}></CircularProgress> :  'Sign UP'}
                 </Button>
               </Grid>
               <Grid mt={"25px"} textAlign={"center"}>

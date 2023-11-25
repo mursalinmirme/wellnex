@@ -16,6 +16,7 @@ import { Link, NavLink } from 'react-router-dom';
 import './Navbar.css';
 import useAuth from '../hooks/useAuth';
 import toast from 'react-hot-toast';
+import { Tune } from '@mui/icons-material';
 // const pages = ["Home", "Available Camps", "Dashboard", "Contact  Us"];
 const pages = [
   {
@@ -44,9 +45,6 @@ const Navbar = () => {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -55,16 +53,22 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+
+  };
   const handleLogOUt = () => {
     logoutUser()
     .then(() => {
+      setAnchorElUser(null);
       toast.success("Logout successfully");
     })
     .catch((error) => {
       toast.error(error.message)
     })
   }
-  console.log(loading);
+
+
     return (
         <AppBar style={{background: 'linear-gradient(90deg, rgba(3,4,94,0.9329061624649859) 0%, rgba(0,150,193,0.88) 53%, rgba(0,119,182,1) 100%)', padding: '11px 0'}} position="static">
       <Container maxWidth="xl">
@@ -163,7 +167,7 @@ const Navbar = () => {
             ))}
           </Box>
           {
-            user ? <>
+            user ?
             <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -200,9 +204,8 @@ const Navbar = () => {
               </MenuItem>
             </Menu>
           </Box>
-            </>
+           
             : 
-            <>
             <Box display={'flex'} gap={'30px'}>
             <Link to={'/signup'}>
             <Button sx={{bgcolor: '#00B4D8', color: '#ffffff', fontWeight: '600', py: '8px','&:hover': {background: '#0096C7', color: '#ffffff'}}} variant='contained'>Signup</Button>
@@ -211,11 +214,11 @@ const Navbar = () => {
             <Button sx={{bgcolor: '#00B4D8', color: '#ffffff', fontWeight: '600', py: '8px','&:hover': {background: '#0096C7', color: '#ffffff'}}} variant='contained'>Login</Button>
             </Link>
             </Box>
-            </>
           }
 
         </Toolbar>
       </Container>
+      
     </AppBar>
     );
 };
