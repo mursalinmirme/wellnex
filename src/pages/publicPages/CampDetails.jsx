@@ -23,8 +23,8 @@ const CampDetails = () => {
       console.log(camp);
     return (
         <div style={{width: '80%', margin: '0 auto'}}>
-            <Paper style={{width: '90%', margin: '0 auto', padding: '20px 20px', marginTop: '20px'}}>
-            <img style={{width: '100%', marginTop: '20px', height: '600px'}} src={camp?.image} alt="" />
+            <Paper style={{width: '90%', margin: '0 auto', padding: '10px 20px', marginTop: '20px'}}>
+            <img style={{width: '100%', marginTop: '0px', height: '600px'}} src={camp?.image} alt="" />
             <Box display={'flex'} mt={'10px'} justifyContent={'space-between'} alignItems={'center'}>
             <h3 style={{fontSize: '32px', flex: '1', lineHeight: '150%'}}>{camp?.camp_name}</h3>
             <Button onClick={handleOpen} size="large" variant="contained" sx={{bgcolor: '#c1121f', color: '#ffffff', fontWeight: '600', py: '12px','&:hover': {background: '#0096C7', color: '#ffffff'}}}>Join Camp</Button>

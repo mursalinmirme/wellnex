@@ -213,7 +213,7 @@ const Navbar = () => {
               </Button>
               )}
             </NavLink>
-              <NavLink style={{textDecoration: 'none'}} to={'/dashboar'}>
+              <NavLink style={{textDecoration: 'none'}} to={'/dashboard/organizer-profile'}>
               {({ isActive }) => (
                   <Button
                 className={isActive ? "activedfdfdfLinkNav" : ""}
