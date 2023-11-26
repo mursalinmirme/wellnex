@@ -1,12 +1,14 @@
 import { Box, Button, Grid, Paper, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 
 const WellnessBlogs = () => {
+    const axiosPublic = useAxiosPublic();
     const { data: blogs = [] } = useQuery({
         queryKey: ["wellnesBolgCollect"],
         queryFn: async () => {
-          const fetchBlogs = await axios("./wellnessBlogs.json");
+          const fetchBlogs = await axiosPublic.get("/wellness-blogs");
           const result = await fetchBlogs.data;
           return result;
         },
