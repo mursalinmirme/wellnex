@@ -1,3 +1,4 @@
+import Loading from "../../loading/Loading";
 
 const OrganizerProfile = () => {
     return (

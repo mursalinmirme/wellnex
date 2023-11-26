@@ -126,7 +126,7 @@ const Signup = () => {
 
   };
   return (
-    <div style={{ width: "80%", margin: "0 auto", marginTop: "40px" }}>
+    <div style={{ width: "80%", margin: "0 auto", marginTop: "40px", marginBottom: '60px' }}>
       <Grid container component="main">
         <Grid
           item

@@ -11,6 +11,7 @@ import OrganizerProfile from "../pages/dashboard/OrganizerProfile";
 import AddaCampPage from "../pages/dashboard/AddaCampPage";
 import ManageCamps from "../pages/dashboard/ManageCamps";
 import ManageRegisteredPage from "../pages/dashboard/ManageRegisteredPage";
+import PrivateRouter from "../privateRouter/PrivateRouter";
 
 const router = createBrowserRouter([
     {
@@ -45,23 +46,23 @@ const router = createBrowserRouter([
     },
     {
         path: 'dashboard',
-        element: <Dashboard></Dashboard>,
+        element: <PrivateRouter><Dashboard></Dashboard></PrivateRouter>,
         children: [
             {
                 path: 'organizer-profile',
-                element: <OrganizerProfile></OrganizerProfile>
+                element: <PrivateRouter><OrganizerProfile></OrganizerProfile></PrivateRouter>
             },
             {
                 path: 'add-a-camp',
-                element: <AddaCampPage></AddaCampPage>
+                element: <PrivateRouter><AddaCampPage></AddaCampPage></PrivateRouter>
             },
             {
                 path: 'manage-camps',
-                element: <ManageCamps></ManageCamps>
+                element: <PrivateRouter><ManageCamps></ManageCamps></PrivateRouter>
             },
             {
                 path: 'manage-registered-camps',
-                element: <ManageRegisteredPage></ManageRegisteredPage>
+                element: <PrivateRouter><ManageRegisteredPage></ManageRegisteredPage></PrivateRouter>
             },
         ]
     }
