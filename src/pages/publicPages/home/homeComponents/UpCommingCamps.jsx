@@ -46,7 +46,7 @@ const UpCommingCamps = () => {
         >
           {upCommingCamps.map((campsComing) => {
             return (
-                <SwiperSlide key={campsComing?.id}>
+                <SwiperSlide key={campsComing?._id}>
               <Card sx={{ maxWidth: 395 }}>
                 <CardActionArea display={"flex"} variant="div">
                   <Box sx={{position: 'relative'}}>

@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import signup from "../../assets/signup.jpg";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
@@ -18,6 +18,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Signup = () => {
   const [errorMsg, setErrorMsg] = React.useState('');
@@ -25,7 +26,8 @@ const Signup = () => {
   const [createLoading, setCreatLoading] = React.useState(false);
   const axiosPublic = useAxiosPublic();
   const [age, setAge] = React.useState('');
-
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
   const handleChange = (event) => {
     setAge(event.target.value);
     console.log(event.target.value);
@@ -118,6 +120,18 @@ const Signup = () => {
       axiosPublic.post('/users', usersData);
       setCreatLoading(false);
       toast.success('Registration successfull');
+      axiosSecure.get(`/user/${email}`)
+          .then(res => {
+                  if(res.data.userRole === "Participants"){
+                   return navigate('/dashboard/participant-profile')
+                  }
+                  if(res.data.userRole === "Organizers"){
+                   return navigate('/dashboard/organizer-profile');
+                  }
+                  if(res.data.userRole === "Healthcare Professionals"){
+                   return navigate('/professional-profile');
+                  }
+          })
     }catch(error){
       setCreatLoading(false);
       toast.error(error.message);

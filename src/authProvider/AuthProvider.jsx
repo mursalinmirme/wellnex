@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from "react";
 export const AuthContext = createContext(null);
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import app from "../firebase.config";
+import { useQuery } from "@tanstack/react-query";
 const auth = getAuth(app);
 
 const AuthProvider = ({children}) => {
@@ -33,16 +34,6 @@ const AuthProvider = ({children}) => {
        return signOut(auth);
     }
 
-    // user sign in
-    const authInfo = {
-        createUser,
-        updateUserProfile,
-        signinUserByEmail,
-        logoutUser,
-        user,
-        loading
-    }
-
     // catch current user
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
@@ -53,6 +44,17 @@ const AuthProvider = ({children}) => {
             unSubscribe()
         }
     }, [])
+
+    // user sign in
+    const authInfo = {
+        createUser,
+        updateUserProfile,
+        signinUserByEmail,
+        logoutUser,
+        user,
+        setUser,
+        loading,
+    }
 
     return (
         <AuthContext.Provider value={authInfo}>

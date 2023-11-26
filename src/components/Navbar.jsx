@@ -17,6 +17,7 @@ import './Navbar.css';
 import useAuth from '../hooks/useAuth';
 import toast from 'react-hot-toast';
 import { Tune } from '@mui/icons-material';
+import useUserRole from '../hooks/useUserRole';
 // const pages = ["Home", "Available Camps", "Dashboard", "Contact  Us"];
 const pages = [
   {
@@ -38,10 +39,10 @@ const pages = [
 ]
 
 const Navbar = () => {
-  const { user, logoutUser, loading } = useAuth();
+  const { user, logoutUser, loading, setUser } = useAuth();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const getRole = useUserRole();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -61,6 +62,7 @@ const Navbar = () => {
     logoutUser()
     .then(() => {
       setAnchorElUser(null);
+      getRole.userRole = '';
       toast.success("Logout successfully");
     })
     .catch((error) => {
@@ -146,17 +148,48 @@ const Navbar = () => {
               </Button>
               )}
             </NavLink>
-              <NavLink style={{textDecoration: 'none'}} to={'/dashboar'}>
-              {({ isActive }) => (
-                  <Button
-                className={isActive ? "activedfdfdfLinkNav" : ""}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: '#000000', display: 'block' }}
-              >
-                Dashboard
-              </Button>
-              )}
-            </NavLink>
+
+              {
+                getRole?.userRole === 'Participants' && <NavLink style={{textDecoration: 'none'}} to={'/dashboar'}>
+                {({ isActive }) => (
+                    <Button
+                  className={isActive ? "activedfdfdfLinkNav" : ""}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: '#000000', display: 'block' }}
+                >
+                  Dashboard
+                </Button>
+                )}
+              </NavLink>
+              }
+              {
+                getRole?.userRole === 'Organizers' && <NavLink style={{textDecoration: 'none'}} to={'/dashboar'}>
+                {({ isActive }) => (
+                    <Button
+                  className={isActive ? "activedfdfdfLinkNav" : ""}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: '#000000', display: 'block' }}
+                >
+                  Dashboard
+                </Button>
+                )}
+              </NavLink>
+              }
+              {
+                getRole?.userRole === 'Healthcare Professionals' && <NavLink style={{textDecoration: 'none'}} to={'/dashboar'}>
+                {({ isActive }) => (
+                    <Button
+                  className={isActive ? "activedfdfdfLinkNav" : ""}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: '#000000', display: 'block' }}
+                >
+                  Dashboard
+                </Button>
+                )}
+              </NavLink>
+              }
+
+              
               <NavLink style={{textDecoration: 'none'}} to={'/contact_us'}>
               {({ isActive }) => (
                   <Button
@@ -213,7 +246,51 @@ const Navbar = () => {
               </Button>
               )}
             </NavLink>
-              <NavLink style={{textDecoration: 'none'}} to={'/dashboard/organizer-profile'}>
+            
+            {
+              getRole?.userRole === 'Participants' && 
+                <NavLink style={{textDecoration: 'none'}} to={'/dashboard/participant-profile'}>
+                {({ isActive }) => (
+                    <Button
+                  className={isActive ? "activedfdfdfLinkNav" : ""}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Dashboard
+                </Button>
+                )}
+               </NavLink>
+              }
+              {
+                getRole?.userRole === 'Organizers' && 
+                <NavLink style={{textDecoration: 'none'}} to={'/dashboard/organizer-profile'}>
+                {({ isActive }) => (
+                    <Button
+                  className={isActive ? "activedfdfdfLinkNav" : ""}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Dashboard
+                </Button>
+                )}
+               </NavLink>
+              }
+              {
+                getRole?.userRole === 'Healthcare Professionals' && 
+                <NavLink style={{textDecoration: 'none'}} to={'/professional-profile'}>
+                {({ isActive }) => (
+                    <Button
+                  className={isActive ? "activedfdfdfLinkNav" : ""}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Dashboard
+                </Button>
+                )}
+               </NavLink>
+              }
+              {
+              !user?.email && <NavLink style={{textDecoration: 'none'}} to={'/dashboard'}>
               {({ isActive }) => (
                   <Button
                 className={isActive ? "activedfdfdfLinkNav" : ""}
@@ -223,7 +300,8 @@ const Navbar = () => {
                 Dashboard
               </Button>
               )}
-            </NavLink>
+             </NavLink>
+            }
               <NavLink style={{textDecoration: 'none'}} to={'/contact_us'}>
               {({ isActive }) => (
                   <Button

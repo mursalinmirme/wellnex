@@ -27,7 +27,7 @@ const WellnessBlogs = () => {
         {
             blogs.slice(0, 4).map(blog => {
                 return (
-                    <Grid key={blog.id} item xs={12} md={12} lg={6}>
+                    <Grid key={blog._id} item xs={12} md={12} lg={6}>
                     <Paper style={{padding: '15px', display: 'flex', alignItems: 'center', gap: '15px', borderRadius: '10px'}} elevation={2}>
                        <Box>
                           <img style={{width: '270px', height: '270px', flexGrow: '1'}} src="https://i.ibb.co/xsx7Kmy/card.jpg" alt="" />

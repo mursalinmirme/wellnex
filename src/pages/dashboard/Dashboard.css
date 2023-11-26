@@ -1,4 +1,5 @@
 .activedashboardRoute{
     color: white !important;
     background-color: rgba(3,4,94,0.50);
+    border-radius: 10px;
 }

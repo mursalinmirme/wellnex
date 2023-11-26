@@ -9,13 +9,16 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import signin from '../../assets/signin.jpg';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
+import useUserRole from '../../hooks/useUserRole';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 const Signin = () => {
   const [errorMsg, setErrorMsg] = React.useState('');
-  const { signinUserByEmail, user } = useAuth();
-  console.log('the current user is', user);
+  const { signinUserByEmail } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -39,6 +42,19 @@ const Signin = () => {
           const signinUser = await signinUserByEmail(email, password);
           console.log(signinUser);
           toast.success("Login Successfully");
+          axiosSecure.get(`/user/${email}`)
+          .then(res => {
+                  if(res.data.userRole === "Participants"){
+                   return navigate('/dashboard/participant-profile')
+                  }
+                  if(res.data.userRole === "Organizers"){
+                   return navigate('/dashboard/organizer-profile');
+                  }
+                  if(res.data.userRole === "Healthcare Professionals"){
+                   return navigate('/professional-profile');
+                  }
+          })
+
         }catch(error){
           console.log(error);
           toast.error(error.message)

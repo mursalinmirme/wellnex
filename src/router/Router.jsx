@@ -12,11 +12,21 @@ import AddaCampPage from "../pages/dashboard/AddaCampPage";
 import ManageCamps from "../pages/dashboard/ManageCamps";
 import ManageRegisteredPage from "../pages/dashboard/ManageRegisteredPage";
 import PrivateRouter from "../privateRouter/PrivateRouter";
+import ParticipantProfile from "../pages/dashboard/ParticipantProfile";
+import RegisteredCamps from "../pages/dashboard/RegisteredCamps";
+import PaymentHistory from "../pages/dashboard/PaymentHistory";
+import FeedbackAndRatings from "../pages/publicPages/home/homeComponents/FeedbackAndRatings";
+import ProfessionalsProfile from "../pages/dashboard/ProfessionalsProfile";
+import ErrorPage from "../components/ErrorPage";
+import OrganizerRoute from "../privateRouter/OrganizerRoute";
+import ParticipantRoute from "../privateRouter/ParticipantRoute";
+import ProfessionalHealthCareRoute from "../privateRouter/ProfessionalHealthCareRoute";
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Mainlayout></Mainlayout>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 path: '/',
@@ -47,24 +57,46 @@ const router = createBrowserRouter([
     {
         path: 'dashboard',
         element: <PrivateRouter><Dashboard></Dashboard></PrivateRouter>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 path: 'organizer-profile',
-                element: <PrivateRouter><OrganizerProfile></OrganizerProfile></PrivateRouter>
+                element: <PrivateRouter><OrganizerRoute><OrganizerProfile></OrganizerProfile></OrganizerRoute></PrivateRouter>
             },
             {
                 path: 'add-a-camp',
-                element: <PrivateRouter><AddaCampPage></AddaCampPage></PrivateRouter>
+                element: <PrivateRouter><OrganizerRoute><AddaCampPage></AddaCampPage></OrganizerRoute></PrivateRouter>
             },
             {
                 path: 'manage-camps',
-                element: <PrivateRouter><ManageCamps></ManageCamps></PrivateRouter>
+                element: <PrivateRouter><OrganizerRoute><ManageCamps></ManageCamps></OrganizerRoute></PrivateRouter>
             },
             {
                 path: 'manage-registered-camps',
-                element: <PrivateRouter><ManageRegisteredPage></ManageRegisteredPage></PrivateRouter>
+                element: <PrivateRouter><OrganizerRoute><ManageRegisteredPage></ManageRegisteredPage></OrganizerRoute></PrivateRouter>
+            },
+            {
+                path: 'participant-profile',
+                element: <PrivateRouter><ParticipantRoute><ParticipantProfile></ParticipantProfile></ParticipantRoute></PrivateRouter>
+            },
+            {
+                path: 'registered-camps',
+                element: <PrivateRouter><ParticipantRoute><RegisteredCamps></RegisteredCamps></ParticipantRoute></PrivateRouter>
+            },
+            {
+                path: 'payment-history',
+                element: <PrivateRouter><ParticipantRoute><PaymentHistory></PaymentHistory></ParticipantRoute></PrivateRouter>
+            },
+            {
+                path: 'feedback-and-ratings',
+                element: <PrivateRouter><ParticipantRoute><FeedbackAndRatings></FeedbackAndRatings></ParticipantRoute></PrivateRouter>
             },
         ]
+    },
+    {
+        path: 'professional-profile', 
+        element: <PrivateRouter><ProfessionalHealthCareRoute><ProfessionalsProfile></ProfessionalsProfile></ProfessionalHealthCareRoute></PrivateRouter>,
+        errorElement: <ErrorPage></ErrorPage>
     }
 ])
 

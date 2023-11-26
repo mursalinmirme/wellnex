@@ -3,54 +3,16 @@ import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
 import './Dashboard.css';
 import { Paper } from "@mui/material";
+import DashboardNavItems from "./dashboardComponent/DashboardNavItems";
 const Dashboard = () => {
     return (
         <div>
             <Navbar></Navbar>
             <div style={{display: 'flex', gap: '20px', marginTop: '30px', margin: '0 auto'}}>
-                <Paper style={{minHeight: '70vh', width: '300px', paddingTop: '20px', marginTop: '0px', background: '#023E8A'}}>
-                <NavLink style={{textDecoration: 'none'}} to={'/dashboard/organizer-profile'}>
-              {({ isActive }) => (
-                  <span
-                  style={{ padding: '20px', color: '#ffffff', display: 'block', fontSize: '18px', fontWeight: '500' }}
-                className={isActive ? "activedashboardRoute" : ""}
-              >
-                Profile
-              </span>
-              )}
-            </NavLink>
-                <NavLink style={{textDecoration: 'none'}} to={'/dashboard/add-a-camp'}>
-              {({ isActive }) => (
-                  <span
-                className={isActive ? "activedashboardRoute" : ""}
-                style={{ padding: '20px', color: '#ffffff', display: 'block', fontSize: '18px', fontWeight: '500' }}
-              >
-                Add a camp
-              </span>
-              )}
-            </NavLink>
-                <NavLink style={{textDecoration: 'none'}} to={'/dashboard/manage-camps'}>
-              {({ isActive }) => (
-                  <span
-                className={isActive ? "activedashboardRoute" : ""}
-                style={{ padding: '20px', color: '#ffffff', display: 'block', fontSize: '18px', fontWeight: '500' }}
-              >
-                Manage Camps
-              </span>
-              )}
-            </NavLink>
-                <NavLink style={{textDecoration: 'none'}} to={'/dashboard/manage-registered-camps'}>
-              {({ isActive }) => (
-                  <span
-                className={isActive ? "activedashboardRoute" : ""}
-                style={{ padding: '20px', color: '#ffffff', display: 'block', fontSize: '18px', fontWeight: '500' }}
-              >
-                Manage Registered Camps
-              </span>
-              )}
-            </NavLink>
+                <Paper style={{minHeight: '70vh', width: '300px', padding: '10px', marginTop: '10px', marginBottom: '10px' ,background: '#023E8A'}}>
+                <DashboardNavItems></DashboardNavItems>
                 </Paper>
-                <div>
+                <div style={{marginTop: '10px', marginBottom: '10px'}}>
                     <Outlet></Outlet>
                 </div>
             </div>
