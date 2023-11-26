@@ -1,5 +1,9 @@
 import { Box, Button, FormControl, InputLabel, MenuItem, Modal, Select, TextField, Typography } from "@mui/material";
 import * as React from 'react';
+import useAuth from '../../../hooks/useAuth'
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 const style = {
   position: "absolute",
   top: "50%",
@@ -11,19 +15,70 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const RegistrationModal = ({ open, handleClose, fees }) => {
-    const [age, setAge] = React.useState('');
-
+const RegistrationModal = ({ open, handleClose, fees, campId }) => {
+    const { user } = useAuth();
+    const axiosSecure = useAxiosSecure();
+    const [gender, setgender] = React.useState('');
+    const [errorMsg, setErrorMsg] = React.useState('');
     const handleChange = (event) => {
-      setAge(event.target.value);
+      setgender(event.target.value);
     };
 
-  const handleJoinCamp = () => {
-alert('hi')
+  const handleJoinCamp = (e) => {
+    e.preventDefault();
+    setErrorMsg('');
+    const form = e.target;
+    const name = form.name.value;
+    const age = form.age.value;
+    const phone = form.phone.value;
+    const participantEmail = user?.email;
+    const participantImage = user?.photoURL;
+    const getGender = gender;
+    const address = form.address.value;
+    const fees = form.fees.value;
+    const healthCondition = form.healthCondition.value;
+    const emergencyContact = form.emergencyContact.value;
+    const camp_id = campId;
+
+  const joinInfo = {name, age, phone, participantEmail, participantImage, getGender, address, fees, healthCondition, emergencyContact, camp_id, }
+
+
+  if(!name){
+    setErrorMsg('Enter your name!');
+    return
+  }
+  if(!age){
+    setErrorMsg('Enter your age!');
+    return
+  }
+  if(!phone){
+    setErrorMsg('Enter your phone number!');
+    return
+  }
+  if(!gender){
+    setErrorMsg('Select your gender!');
+    return
+  }
+  if(!address){
+    setErrorMsg('Enter your address!');
+    return
+  }
+  if(!healthCondition){
+    setErrorMsg('Write your health condition!');
+    return
+  }
+  if(!emergencyContact){
+    setErrorMsg('Write your emergency contact!');
+    return
   }
 
+  axiosSecure.post('/join-camp-reg', joinInfo)
+  .then(res => {
+    console.log(res.data);
+    toast.success("Join camp registrantion request successfully!");
+  })
 
-
+  }
 
 
   return (
@@ -43,6 +98,9 @@ alert('hi')
         >
           Join camp Registration
         </Typography>
+        {
+          errorMsg && <Typography color={'red'} textAlign={'center'} mt={'20px'}>{errorMsg}</Typography>
+        }
         <Box onSubmit={handleJoinCamp} mt={"30px"} component={"form"}>
           <Box display={'flex'} gap={'20px'}>
           <TextField
@@ -50,6 +108,7 @@ alert('hi')
             fullWidth
             id="outlined-basic"
             label="Your Name"
+            name="name"
             variant="outlined"
           />
           <TextField
@@ -57,6 +116,7 @@ alert('hi')
             fullWidth
             id="outlined-basic"
             label="Age"
+            name="age"
             variant="outlined"
           />
           </Box>
@@ -66,6 +126,7 @@ alert('hi')
             fullWidth
             id="outlined-basic"
             label="Phone"
+            name="phone"
             variant="outlined"
           />
           <FormControl sx={{my: '13px'}} fullWidth>
@@ -73,8 +134,8 @@ alert('hi')
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={age}
-              name="address"
+              value={gender}
+              name="gender"
               label="Gender"
               onChange={handleChange}
             >
@@ -97,6 +158,7 @@ alert('hi')
           fullWidth
           id="outlined-read-only-input"
           label="Fees"
+          name="fees"
           defaultValue={fees}
           InputProps={{
             readOnly: true,

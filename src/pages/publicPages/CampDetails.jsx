@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Paper } from "@mui/material";
 import RegistrationModal from './shares/RegistrationModal';
 
 const CampDetails = () => {
@@ -23,7 +23,7 @@ const CampDetails = () => {
       console.log(camp);
     return (
         <div style={{width: '80%', margin: '0 auto'}}>
-            <div style={{width: '80%', margin: '0 auto'}}>
+            <Paper style={{width: '90%', margin: '0 auto', padding: '20px 20px', marginTop: '20px'}}>
             <img style={{width: '100%', marginTop: '20px', height: '600px'}} src={camp?.image} alt="" />
             <Box display={'flex'} mt={'10px'} justifyContent={'space-between'} alignItems={'center'}>
             <h3 style={{fontSize: '32px', flex: '1', lineHeight: '150%'}}>{camp?.camp_name}</h3>
@@ -51,9 +51,9 @@ const CampDetails = () => {
             <h5 style={{fontWeight: '600', fontSize: '30px', marginBottom: '0px'}}>Description:</h5>
             <p style={{lineHeight: '180%', fontSize: '17px'}}>{camp?.description}</p>
             
-            </div>
+            </Paper>
             
-            <RegistrationModal open={open} handleClose={handleClose} fees={camp?.camp_fees}></RegistrationModal>
+            <RegistrationModal open={open} handleClose={handleClose} fees={camp?.camp_fees} campId={camp?._id}></RegistrationModal>
 
 
         </div>
