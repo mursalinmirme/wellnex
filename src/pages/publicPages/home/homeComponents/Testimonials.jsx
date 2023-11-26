@@ -8,11 +8,13 @@ import axios from "axios";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 const Testimonials = () => {
+  const axiosPublic = useAxiosPublic();
   const { data: rattings = [] } = useQuery({
-    queryKey: ["campsRatting"],
+    queryKey: ["pargicipintsRatting"],
     queryFn: async () => {
-      const fetchrattings = await axios("./rating.json");
+      const fetchrattings = await axiosPublic.get("/participants_ratings");
       const result = await fetchrattings.data;
       return result;
     },
@@ -47,13 +49,16 @@ const Testimonials = () => {
             return (
               <SwiperSlide key={ratting?._id}>
                 <Box
-                  style={{ height: "300px" }}
+                  style={{ padding: '50px 0' }}
                   display={"flex"}
                   flexDirection={"column"}
                   justifyContent={"center"}
                   alignItems={"center"}
                 >
-                  <Box display={"flex"} justifyContent={"center"}>
+                  <Box>
+                    <img style={{width: '80px', height: '80px', borderRadius: '50%'}} src={ratting?.image} alt="" />
+                    </Box>
+                  <Box mt={'10px'} display={"flex"} justifyContent={"center"}>
                     <Rating
                       name="half-rating"
                       defaultValue={2.5}

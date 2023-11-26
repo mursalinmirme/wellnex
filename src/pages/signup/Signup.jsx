@@ -13,12 +13,23 @@ import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import CircularProgress from '@mui/material/CircularProgress';
+// select related
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 const Signup = () => {
   const [errorMsg, setErrorMsg] = React.useState('');
   const { createUser, updateUserProfile } = useAuth();
   const [createLoading, setCreatLoading] = React.useState(false);
   const axiosPublic = useAxiosPublic();
+  const [age, setAge] = React.useState('');
 
+  const handleChange = (event) => {
+    setAge(event.target.value);
+    console.log(event.target.value);
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     setErrorMsg('');
@@ -27,6 +38,8 @@ const Signup = () => {
     const email = data.get("email");
     const password = data.get("password");
     const profilePic = data.get("profilePic");
+    const userRole = data.get("userRole");
+    // console.log('User role is', userRole);
     setCreatLoading(true);
     // validations
     if(!name){
@@ -49,11 +62,17 @@ const Signup = () => {
       setCreatLoading(false);
       return
     }
+    if(!userRole){
+      setErrorMsg('Please select your role');
+      setCreatLoading(false);
+      return
+    }
     if(!profilePic.name){
       setErrorMsg('Please select you profile picture');
       setCreatLoading(false);
       return
     }
+    
     if (profilePic.type !== 'image/jpeg' && profilePic.type !== 'image/jpg' && profilePic.type !== 'image/png') {
       setErrorMsg('Please select jpeg, jpg or png format Image');
       setCreatLoading(false);
@@ -94,7 +113,7 @@ const Signup = () => {
         name,
         email,
         image: uploadImgResp.data.display_url,
-        role: 'participants'
+        role: userRole
       }
       axiosPublic.post('/users', usersData);
       setCreatLoading(false);
@@ -186,7 +205,24 @@ const Signup = () => {
                 id="password"
                 autoComplete="current-password"
               />
-              <Grid py={"7px"}>
+              <Box mt={'15px'} sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Account Type</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={age}
+                  name="userRole"
+                  label="Account Type"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={'Participants'}>Participants</MenuItem>
+                  <MenuItem value={'Organizers'}>Organizers</MenuItem>
+                  <MenuItem value={'Healthcare Professionals'}>Healthcare Professionals</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+              <Grid mt={'10px'} py={"7px"}>
                 <Typography variant="body1" mb={"3px"}>
                   Upload Profile:
                 </Typography>

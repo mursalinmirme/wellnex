@@ -6,6 +6,7 @@ import DashboardRoutes from "../pages/dashboard/dashboardRoutes/DashboardRoutes"
 import ContactUs from "../pages/publicPages/home/ContactUs";
 import Signup from "../pages/signup/Signup";
 import Signin from "../pages/signin/Signin";
+import CampDetails from "../pages/publicPages/CampDetails";
 
 const router = createBrowserRouter([
     {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
             {
                 path: 'available_camp',
                 element: <AvailableCamps></AvailableCamps>
+            },
+            {
+                path: 'camps-details/:id',
+                element: <CampDetails></CampDetails>
             },
             {
                 path: 'contact_us',

@@ -1,6 +1,5 @@
 [
     {
-      "_id": 1,
       "camp_name": "Health & Wellness Expo",
       "image": "https://i.ibb.co/xsx7Kmy/card.jpg",
       "camp_fees": "20",
@@ -11,7 +10,6 @@
       "target_audience": "General Public"
     },
     {
-      "_id": 2,
       "camp_name": "Pediatric Health Fair",
       "image": "https://i.ibb.co/xsx7Kmy/card.jpg",
       "camp_fees": "Free",
@@ -22,7 +20,6 @@
       "target_audience": "Children and Parents"
     },
     {
-      "_id": 3,
       "camp_name": "Heart Health Awareness",
       "image": "https://i.ibb.co/xsx7Kmy/card.jpg",
       "camp_fees": "15",
@@ -33,7 +30,6 @@
       "target_audience": "Adults with Heart Health Concerns"
     },
     {
-      "_id": 4,
       "camp_name": "Women's Health Symposium",
       "image": "https://i.ibb.co/xsx7Kmy/card.jpg",
       "camp_fees": "25",
@@ -44,7 +40,6 @@
       "target_audience": "Women of All Ages"
     },
     {
-      "_id": 5,
       "camp_name": "Mental Health Awareness",
       "image": "https://i.ibb.co/xsx7Kmy/card.jpg",
       "camp_fees": "10",
@@ -55,7 +50,6 @@
       "target_audience": "All Ages - Mental Health Focus"
     },
     {
-      "_id": 6,
       "camp_name": "Senior Health and Fitness",
       "image": "https://i.ibb.co/xsx7Kmy/card.jpg.jpg",
       "camp_fees": "15",

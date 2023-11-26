@@ -11,12 +11,15 @@ import {
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import useAxiosPublic from "../../../../hooks/useAxiosPublic";
+import { Link } from "react-router-dom";
 
 const PopularCampusSection = () => {
+  const axiosPublic = useAxiosPublic();
   const { data: popularComps = [] } = useQuery({
     queryKey: ["popularCampases"],
     queryFn: async () => {
-      const fetchCampus = await axios("./popularCampus.json");
+      const fetchCampus = await axiosPublic.get("/popular-camps");
       const result = await fetchCampus.data;
       return result;
     },
@@ -73,9 +76,11 @@ const PopularCampusSection = () => {
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
+                  <Link to={`camps-details/${camps?._id}`}>
                   <Button sx={{bgcolor: '#0077B6', color: '#ffffff', fontWeight: '600', py: '8px','&:hover': {background: '#0096C7', color: '#ffffff'}}} style={{marginLeft: '10px', marginBottom: '15px'}} variant="contained" color="primary">
                     Details
                   </Button>
+                  </Link>
                 </CardActions>
               </Card>
             </Grid>

@@ -121,14 +121,53 @@ const Navbar = () => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none' },
+                display: { xs: 'block', md: 'none', color: '$000000' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page?.navName} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page.navName}</Typography>
-                </MenuItem>
-              ))}
+                 <NavLink style={{textDecoration: 'none'}} to={'/'}>
+              {({ isActive }) => (
+                  <Button
+                className={isActive ? "activedfdfdfLinkNav" : ""}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: '#000000', display: 'block', width: '300px' }}
+              >
+                Home
+              </Button>
+              )}
+            </NavLink>
+              <NavLink style={{textDecoration: 'none'}} to={'/available_camp'}>
+              {({ isActive }) => (
+                  <Button
+                className={isActive ? "activedfdfdfLinkNav" : ""}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: '#000000', display: 'block' }}
+              >
+                Available Camps
+              </Button>
+              )}
+            </NavLink>
+              <NavLink style={{textDecoration: 'none'}} to={'/dashboar'}>
+              {({ isActive }) => (
+                  <Button
+                className={isActive ? "activedfdfdfLinkNav" : ""}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: '#000000', display: 'block' }}
+              >
+                Dashboard
+              </Button>
+              )}
+            </NavLink>
+              <NavLink style={{textDecoration: 'none'}} to={'/contact_us'}>
+              {({ isActive }) => (
+                  <Button
+                className={isActive ? "activedfdfdfLinkNav" : ""}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: '#000000', display: 'block' }}
+              >
+                Contact Us
+              </Button>
+              )}
+            </NavLink>
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -151,20 +190,54 @@ const Navbar = () => {
             WellNex
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: '20px' }}>
-            {pages.map((page) => (
-              <NavLink style={{textDecoration: 'none'}} key={page.navName} to={page?.path}>
+          
+              <NavLink style={{textDecoration: 'none'}} to={'/'}>
               {({ isActive }) => (
                   <Button
-                key={page}
                 className={isActive ? "activedfdfdfLinkNav" : ""}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page?.navName}
+                Home
               </Button>
               )}
             </NavLink>
-            ))}
+              <NavLink style={{textDecoration: 'none'}} to={'/available_camp'}>
+              {({ isActive }) => (
+                  <Button
+                className={isActive ? "activedfdfdfLinkNav" : ""}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                Available Camps
+              </Button>
+              )}
+            </NavLink>
+              <NavLink style={{textDecoration: 'none'}} to={'/dashboar'}>
+              {({ isActive }) => (
+                  <Button
+                className={isActive ? "activedfdfdfLinkNav" : ""}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                Dashboard
+              </Button>
+              )}
+            </NavLink>
+              <NavLink style={{textDecoration: 'none'}} to={'/contact_us'}>
+              {({ isActive }) => (
+                  <Button
+                className={isActive ? "activedfdfdfLinkNav" : ""}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                Contact Us
+              </Button>
+              )}
+            </NavLink>
+
+
+
           </Box>
           {
             user ?

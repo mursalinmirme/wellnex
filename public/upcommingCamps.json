@@ -1,6 +1,5 @@
 [
     {
-      "id": 1,
       "camp_name": "Wellness Checkup Camp",
       "date": "2023-03-15",
       "location": "City Park, Downtown",
@@ -8,7 +7,6 @@
       "image": "wellness_checkup.jpg"
     },
     {
-      "id": 2,
       "camp_name": "Community Health Day",
       "date": "2023-04-22",
       "location": "Community Center Auditorium",
@@ -16,7 +14,6 @@
       "image": "community_health_day.jpg"
     },
     {
-      "id": 3,
       "camp_name": "Healthy Living Workshop",
       "date": "2023-05-18",
       "location": "Wellness Center, Main Street",
@@ -24,7 +21,6 @@
       "image": "healthy_living_workshop.jpg"
     },
     {
-      "id": 4,
       "camp_name": "Family Wellness Expo",
       "date": "2023-06-30",
       "location": "Convention Center Hall A",
@@ -32,7 +28,6 @@
       "image": "family_wellness_expo.jpg"
     },
     {
-      "id": 5,
       "camp_name": "Mind-Body Harmony Retreat",
       "date": "2023-08-10",
       "location": "Nature Retreat Center",

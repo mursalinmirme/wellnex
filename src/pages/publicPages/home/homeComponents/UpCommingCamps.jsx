@@ -11,12 +11,14 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 
 const UpCommingCamps = () => {
+  const axiosPublic = useAxiosPublic();
   const { data: upCommingCamps = [] } = useQuery({
     queryKey: ["commingCamps"],
     queryFn: async () => {
-      const fetchcommingCamps = await axios("./upcommingCamps.json");
+      const fetchcommingCamps = await axiosPublic.get("/upcomming-camps");
       const result = await fetchcommingCamps.data;
       return result;
     },
