@@ -1,12 +1,17 @@
+import * as React from 'react';
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { Box, Button } from "@mui/material";
+import RegistrationModal from './shares/RegistrationModal';
 
 const CampDetails = () => {
     const {id} = useParams();
     console.log(id);
     const axiosPublic = useAxiosPublic();
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const { data: camp = [] } = useQuery({
         queryKey: ["camps_details"],
         queryFn: async () => {
@@ -22,7 +27,7 @@ const CampDetails = () => {
             <img style={{width: '100%', marginTop: '20px', height: '600px'}} src={camp?.image} alt="" />
             <Box display={'flex'} mt={'10px'} justifyContent={'space-between'} alignItems={'center'}>
             <h3 style={{fontSize: '32px', flex: '1', lineHeight: '150%'}}>{camp?.camp_name}</h3>
-            <Button size="large" variant="contained" sx={{bgcolor: '#c1121f', color: '#ffffff', fontWeight: '600', py: '12px','&:hover': {background: '#0096C7', color: '#ffffff'}}}>Join Camp</Button>
+            <Button onClick={handleOpen} size="large" variant="contained" sx={{bgcolor: '#c1121f', color: '#ffffff', fontWeight: '600', py: '12px','&:hover': {background: '#0096C7', color: '#ffffff'}}}>Join Camp</Button>
             </Box>
             <p style={{fontSize: '20px', marginTop: '0px'}}>Fees: <span style={{fontWeight: '600'}}>$ {camp?.camp_fees}</span></p>
             <p style={{fontSize: '20px', fontWeight: '600'}}>Time: {camp?.scheduled_date_time}</p>
@@ -47,6 +52,10 @@ const CampDetails = () => {
             <p style={{lineHeight: '180%', fontSize: '17px'}}>{camp?.description}</p>
             
             </div>
+            
+            <RegistrationModal open={open} handleClose={handleClose} fees={camp?.camp_fees}></RegistrationModal>
+
+
         </div>
     );
 };
