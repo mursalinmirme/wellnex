@@ -9,7 +9,7 @@ const Dashboard = () => {
         <div>
             <Navbar></Navbar>
             <div style={{display: 'flex', gap: '20px', marginTop: '30px', margin: '0 auto'}}>
-                <Paper style={{minHeight: '70vh', width: '300px', padding: '10px', marginTop: '10px', marginBottom: '10px' ,background: '#023E8A'}}>
+                <Paper style={{minHeight: '70vh', width: '350px', padding: '10px', marginTop: '10px', marginBottom: '10px' ,background: '#023E8A'}}>
                 <DashboardNavItems></DashboardNavItems>
                 </Paper>
                 <div style={{marginTop: '10px', marginBottom: '10px', flex: '1'}}>
