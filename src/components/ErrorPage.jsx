@@ -14,8 +14,8 @@ const ErrorPage = () => {
       }}
     >
       <h4 style={{ fontSize: "48px", margin: "0" }}>Oppps....</h4>
-      <p style={{ fontSize: "24px", fontWeight: "600" }}>
-        Your serching page not found!
+      <p style={{ fontSize: "28px", fontWeight: "600" }}>
+        Something went wrong!
       </p>
       <Link to={'/'}>
         <Button variant="contained" startIcon={<ArrowBackIcon />}>

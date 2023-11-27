@@ -12,7 +12,7 @@ const Dashboard = () => {
                 <Paper style={{minHeight: '70vh', width: '300px', padding: '10px', marginTop: '10px', marginBottom: '10px' ,background: '#023E8A'}}>
                 <DashboardNavItems></DashboardNavItems>
                 </Paper>
-                <div style={{marginTop: '10px', marginBottom: '10px'}}>
+                <div style={{marginTop: '10px', marginBottom: '10px', flex: '1'}}>
                     <Outlet></Outlet>
                 </div>
             </div>
