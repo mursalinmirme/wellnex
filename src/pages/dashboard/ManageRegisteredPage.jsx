@@ -1,11 +1,163 @@
-import { useReactTable } from "@tanstack/react-table";
+import { Box, Button, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../../hooks/useAuth";
+import { tr } from "date-fns/locale";
+import Swal from "sweetalert2";
+// const data = [
+//     {
+//         "camp_name": "Brady",
+//         "scheduled_date_time": "Gommery",
+//         "venue_location": "bgommery1@amazon.de",
+//         "camp_fees": "Male",
+//         "payment_status": "2022-12-11T17:35:54Z",
+//         "confiremation_status": "Male",
+//         "_id": "2022-12-11T17:35:54Z",
+//       },
+//       {
+//         "camp_name": "Brady",
+//         "scheduled_date_time": "Gommery",
+//         "venue_location": "bgommery1@amazon.de",
+//         "camp_fees": "Male",
+//         "payment_status": "2022-12-11T17:35:54Z",
+//         "confiremation_status": "Male",
+//         "_id": "2022-12-11T17:35:54Z",
+//       },
+// ];
+
+
+
 
 const ManageRegisteredPage = () => {
-    const table = useReactTable(options)
+    const { user } = useAuth();
+    const axiosSecure = useAxiosSecure();
+    const {data: data=[], refetch} = useQuery({
+        queryKey: ['manageRegistrations'],
+        queryFn: async () => {
+           const result = await axiosSecure.get(`/registered_under_organizers?email=${user?.email}`);
+            return result.data;
+        }
+    })
+    console.log(data);
+    const handleConfirmation = (regId) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want to confirmed the registration!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+          }).then((result) => {
+
+            if (result.isConfirmed) {
+                axiosSecure.patch(`/payment-status/${regId}`)
+                .then(res => {
+                if(res.data.operatonStatus === 'success'){
+                refetch()
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Registration confirmation successfully!",
+                    icon: "success"
+                  });
+                 }
+                })
+              
+            }
+          });
+        
+    }
+
+    
+
+
+
+    const columns = [
+        {
+            header: 'Camp Name',
+            accessorKey: 'campInfo.camp_name',
+        },
+        {
+            header: 'Date_Time',
+            accessorKey: 'campInfo.scheduled_date_time',
+        },
+        {
+            header: 'Venue',
+            accessorKey: 'campInfo.venue_location',
+        },
+        {
+            header: 'Camp_Fees',
+            accessorKey: 'campInfo.camp_fees',
+        },
+        {
+            header: 'Payment_Status',
+            accessorKey: 'payment_status',
+            cell: ({value, row}) => (
+                <Typography>{row.original.payment_status == "paid" ? <Typography sx={{color: 'green', fontWeight: '600'}} variant="outlined">Paid</Typography> : <Typography sx={{color: 'red', fontWeight: '600'}} variant="contained">Unpaid</Typography>}</Typography>
+            )
+        },
+        {
+            header: 'Confirmation_Status',
+            accessorKey: 'confirmation_stauts',
+            cell: ({value, row}) => (
+                <Box>{row.original.confirmation_stauts === "Confirmed" ? <Button sx={{background: 'green', fontWeight: '600'}} variant="contained">Confirmed</Button> : <Button disabled={row.original.payment_status === 'paid' ? false : true} onClick={() => handleConfirmation(row.original._id)} sx={{color: 'white', fontWeight: '600',}} variant="contained">Pending</Button>}</Box>
+            )
+        },
+        {
+            header: 'Actions',
+            accessorKey: '_id',
+            cell: ({ value, row }) => (
+                <Box><Button disabled={row.original.payment_status === "paid" ? false : true} onClick={() => handleDeleteRegisteredCamps(row.original._id)} sx={{background: 'red'}} variant="contained">Cencel</Button></Box>
+            )
+        },
+    ]
+
+
+
+    const table = useReactTable({
+        data, 
+        columns,
+        getCoreRowModel: getCoreRowModel(),
+    })
     return (
-        <div>
-            this is manage registered page it will update soon
-        </div>
+        <Box>
+            <Box py={'20px'}>
+                <Typography fontSize={'24px'} fontWeight={"600"} textAlign={'center'} component={'h4'}>Manage Registered Camps</Typography>
+            </Box>
+            <Table component={'table'}>
+                <TableHead component={'thead'}>
+                {table.getHeaderGroups().map(headerGroup => (
+                    <TableRow key={headerGroup?.id} component={'tr'}>
+                        {headerGroup.headers.map(header => (
+                            <TableCell sx={{fontWeight:'600'}} key={header?.id} component={'th'}>
+                                {header.isPlaceholder ? null : (
+                                    <Box>
+                                        {flexRender(
+                                            header.column.columnDef.header, header.getContext()
+                                        )}
+                                    </Box>
+                                )}
+                            </TableCell>
+                        ))}
+                </TableRow>
+                    ) )}
+                    
+                </TableHead>
+                <TableBody component={'tbody'}>
+                    {table.getRowModel().rows.map(row => (
+                        <TableRow key={row?.id} component={'tr'}>
+                            {row.getVisibleCells().map(cell => (
+                                <TableCell key={cell?.id} component={'td'}>
+                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    ))}
+                    
+                </TableBody>
+            </Table>
+        </Box>
     );
 };
 

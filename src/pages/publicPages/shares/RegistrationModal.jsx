@@ -15,7 +15,8 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const RegistrationModal = ({ open, handleClose, fees, campId }) => {
+const currentTime = new Date();
+const RegistrationModal = ({ open, handleClose, fees, campId, camp_name, venue_location, camp_fees, camp_owner, scheduled_date_time }) => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [gender, setgender] = React.useState('');
@@ -40,7 +41,7 @@ const RegistrationModal = ({ open, handleClose, fees, campId }) => {
     const emergencyContact = form.emergencyContact.value;
     const camp_id = campId;
 
-  const joinInfo = {name, age, phone, participantEmail, participantImage, getGender, address, fees, healthCondition, emergencyContact, camp_id, }
+  const joinInfo = {name, age, phone, participantEmail, participantImage, getGender, address, fees, healthCondition, emergencyContact, reg_time:currentTime, payment_status: '', confirmation_stauts: '', campInfo:{camp_id, camp_name, venue_location, camp_fees, scheduled_date_time, camp_owner } }
 
 
   if(!name){
@@ -76,6 +77,7 @@ const RegistrationModal = ({ open, handleClose, fees, campId }) => {
   .then(res => {
     console.log(res.data);
     toast.success("Join camp registrantion request successfully!");
+    form.reset();
   })
 
   }
@@ -159,7 +161,7 @@ const RegistrationModal = ({ open, handleClose, fees, campId }) => {
           id="outlined-read-only-input"
           label="Fees"
           name="fees"
-          defaultValue={fees}
+          defaultValue={`$${fees}`}
           InputProps={{
             readOnly: true,
           }}

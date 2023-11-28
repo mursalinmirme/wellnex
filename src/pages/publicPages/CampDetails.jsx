@@ -53,7 +53,7 @@ const CampDetails = () => {
             
             </Paper>
             
-            <RegistrationModal open={open} handleClose={handleClose} fees={camp?.camp_fees} campId={camp?._id}></RegistrationModal>
+            <RegistrationModal open={open} handleClose={handleClose} fees={camp?.camp_fees} camp_name={camp?.camp_name} venue_location={camp?.venue_location} camp_fees={camp?.camp_fees} campId={camp?._id} camp_owner={camp?.campOwnerEmail} scheduled_date_time={camp?.scheduled_date_time}></RegistrationModal>
 
 
         </div>
