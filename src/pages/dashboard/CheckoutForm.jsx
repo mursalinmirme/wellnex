@@ -12,13 +12,12 @@ import { Tune } from "@mui/icons-material";
 const CheckoutForm = ({camp_name, scheduled_date_time, venue_location, camp_fees, camp_id, payment_status, refetch}) => {
   const stripe = useStripe();
   const elements = useElements();
+  const [price, setPrice] = useState(parseInt(camp_fees) || 20);//optional used for save to crash if user reload in the payment page
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [paymentLoading, setPaymentLoading] = useState(false)
   const axiosSecure = useAxiosSecure();
   const {user} = useAuth();
-
-  const price = 20;
 
 const {data: clientSecret} = useQuery({
     queryKey: ['makePayment'],

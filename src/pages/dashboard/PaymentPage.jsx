@@ -6,7 +6,7 @@ import { Box, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useParams } from 'react-router-dom';
-const stripePromise = loadStripe("pk_test_51OER7IJ9Ahy2nvB6BLmbMgIwXh3fhVTlcpILz4rYkrl4PT30xEXOEmk8V4PLJm6MRqlcT6YK3M0296kYgrBUt2dC00YAtXIApt");
+const stripePromise = loadStripe(import.meta.env.VITE_STRIP_SECRET);
 
 const PaymentPage = () => {
     const axiosSecure = useAxiosSecure();
