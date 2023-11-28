@@ -20,6 +20,7 @@ const AddaCampPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm()
 
 
@@ -59,6 +60,7 @@ const AddaCampPage = () => {
         .then(res => {
             console.log(res.data);
             if(res.data.acknowledged){
+                reset();
                 toast.success('Your camp successfully added!')
             }
         })

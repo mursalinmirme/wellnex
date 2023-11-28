@@ -69,7 +69,35 @@ const ManageRegisteredPage = () => {
         
     }
 
-    
+    const handleDeleteRegisteredCamps = (deleteId) => {
+        console.log('delete id is', deleteId);
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want to delete the participant registered camp!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+          }).then((result) => {
+
+            if (result.isConfirmed) {
+                axiosSecure.delete(`/participant-register-camp/${deleteId}`)
+                .then(res => {
+                    console.log(res.data);
+                if(res.data.acknowledged){
+                refetch()
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Registration cancellision successfully!",
+                    icon: "success"
+                  });
+                 }
+                })
+              
+            }
+          });
+    }
 
 
 

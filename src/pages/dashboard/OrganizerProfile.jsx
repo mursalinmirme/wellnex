@@ -15,18 +15,18 @@ const OrganizerProfile = () => {
     const {data: organizer, refetch} = useQuery({
         queryKey: ['organizerDetails'],
         queryFn: async () => {
-            const result = await axiosSecure.get(`/organizer?email=${user?.email}`);
+            const result = await axiosSecure.get(`/users?email=${user?.email}`);
             return result.data;
         }
     })
     
     return (
         <Paper sx={{width: '98%', padding: '10px'}}>
-            <Box textAlign={'center'}>
-            <img style={{width: '300px', height: '300px', borderRadius: '50%', margin: '0px auto'}} src={organizer?.image} alt="" />
-            <Typography fontSize={'32px'} fontWeight={'600'} textAlign={'center'} mt={'20px'}>{organizer?.name}</Typography>
+            <Box sx={{background: 'linear-gradient(90deg, rgba(3,4,94,0.9192927170868347) 0%, rgba(2,62,138,0.9080882352941176) 53%, rgba(0,119,182,0.9585084033613446) 100%)', padding: '30px 0px'}} textAlign={'center'}>
+            <img style={{width: '200px', height: '200px', borderRadius: '50%'}} src={organizer?.image} alt="" />
+            <Typography color={'white'} fontSize={'32px'} fontWeight={'600'} textAlign={'center'} mt={'20px'}>{organizer?.name}</Typography>
             {
-                organizer?.bio && <Typography mt={'10px'} variant='body1'>{organizer?.bio}</Typography>
+                organizer?.bio && <Typography color={'white'} mt={'10px'} variant='body1'>{organizer?.bio}</Typography>
             }
             <Button onClick={handleOpen} variant="contained" sx={{mt: '20px'}}>Update Information</Button>
             </Box>
