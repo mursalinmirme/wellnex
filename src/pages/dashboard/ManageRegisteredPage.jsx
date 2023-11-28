@@ -5,29 +5,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { tr } from "date-fns/locale";
 import Swal from "sweetalert2";
-// const data = [
-//     {
-//         "camp_name": "Brady",
-//         "scheduled_date_time": "Gommery",
-//         "venue_location": "bgommery1@amazon.de",
-//         "camp_fees": "Male",
-//         "payment_status": "2022-12-11T17:35:54Z",
-//         "confiremation_status": "Male",
-//         "_id": "2022-12-11T17:35:54Z",
-//       },
-//       {
-//         "camp_name": "Brady",
-//         "scheduled_date_time": "Gommery",
-//         "venue_location": "bgommery1@amazon.de",
-//         "camp_fees": "Male",
-//         "payment_status": "2022-12-11T17:35:54Z",
-//         "confiremation_status": "Male",
-//         "_id": "2022-12-11T17:35:54Z",
-//       },
-// ];
-
-
-
+import moment from "moment";
 
 const ManageRegisteredPage = () => {
     const { user } = useAuth();
@@ -109,6 +87,9 @@ const ManageRegisteredPage = () => {
         {
             header: 'Date_Time',
             accessorKey: 'campInfo.scheduled_date_time',
+            cell: ({value, row}) => (
+                <Box><Typography>{moment(row.original.scheduled_date_time).format('LLL')}</Typography></Box>
+            )
         },
         {
             header: 'Venue',

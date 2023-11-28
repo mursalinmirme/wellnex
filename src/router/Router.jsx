@@ -21,6 +21,7 @@ import ErrorPage from "../components/ErrorPage";
 import OrganizerRoute from "../privateRouter/OrganizerRoute";
 import ParticipantRoute from "../privateRouter/ParticipantRoute";
 import ProfessionalHealthCareRoute from "../privateRouter/ProfessionalHealthCareRoute";
+import PaymentPage from "../pages/dashboard/PaymentPage";
 
 const router = createBrowserRouter([
     {
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
             {
                 path: 'feedback-and-ratings',
                 element: <PrivateRouter><ParticipantRoute><FeedbackAndRatings></FeedbackAndRatings></ParticipantRoute></PrivateRouter>
+            },
+            {
+                path: 'payment-page/:id',
+                element: <PrivateRouter><ParticipantRoute><PaymentPage></PaymentPage></ParticipantRoute></PrivateRouter>
             },
         ]
     },
