@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, InputLabel, Modal, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from "@mui/material";
+import { Box, Button, FormControl, InputLabel, Modal, Rating, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField, TextareaAutosize, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import * as React from 'react';
 import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
@@ -7,12 +7,14 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import useAuth from "../../hooks/useAuth";
+import axios from "axios";
+import toast from "react-hot-toast";
 const style = {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 900,
+    width: 700,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -22,9 +24,10 @@ const FeedbackAndRatings = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [value, setValue] = React.useState(0);
     const [errorMsg, setErrorMsg] = React.useState('');
+    const [currentCamp, setCurrentCamp] = React.useState('');
     const {data: data=[], refetch} = useQuery({
         queryKey: ['participantReviewAndFeedback'],
         queryFn: async () => {
@@ -73,7 +76,7 @@ const FeedbackAndRatings = () => {
             header: 'Actions',
             accessorKey: '_id',
             cell: ({ value, row }) => (
-                <Box><Button onClick={handleOpen} variant="contained">Review</Button></Box>
+                <Box><Button onClick={() => handleOpen(row.original._id)} variant="contained">Review</Button></Box>
             )
         },
     ]
@@ -86,11 +89,70 @@ const FeedbackAndRatings = () => {
         getCoreRowModel: getCoreRowModel(),
     })
 
-  
+    // open modal 
+    const handleOpen = async (reviewerCampId) => {
+        setOpen(true);
+        const getCampName = await axiosSecure.get(`/review-cam-name/${reviewerCampId}`);
+        setCurrentCamp(getCampName?.data?.campInfo?.camp_name)
+    };
+    console.log('current camp is', currentCamp);
     // handle submit review
-    const handleparticipnatReview = (e) => {
+    const handleparticipnatReview = async (e) => {
         e.preventDefault();
-        alert('hi')
+        setErrorMsg('');
+        const reviewDate = new Date();
+        const selecePic = e.target.selectImg.files[0];
+        const reviewText = e.target.reviewText.value;
+        if(value < 1){
+            setErrorMsg('Please give a review star');
+            return
+        }
+        console.log(selecePic);
+        if(!selecePic){
+            setErrorMsg("Please Shere the moment picture")
+            return
+        }
+        if(!reviewText){
+            e.target.reviewText.focus();
+            setErrorMsg("Please shere your experience")
+            return
+        }
+
+        const formData = new FormData();
+        formData.append("image", selecePic);
+        // upload profile pic
+        const uploadImage = await axios.post(
+          `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_imageBB_API}`,
+          formData
+        );
+        const uploadImgResp = await uploadImage.data;
+
+        console.log('review upload image res is', uploadImgResp.data.delete_url);
+        const newReview = {
+            reviewerName: user?.displayName,
+            reviewerEmail: user?.email,
+            reviewImage: uploadImgResp.data.delete_url,
+            reviewStar: value,
+            feedbackText: reviewText,
+            date: reviewDate,
+            camp_name: currentCamp
+        }
+        console.log(newReview);
+        const sendReview = await axiosSecure.post('/participant-review',newReview);
+        if(sendReview.data.acknowledged){
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Feedback Successfully",
+                showConfirmButton: false,
+                timer: 2000,
+              });
+            // toast.success('Feedback Successfully')
+            setOpen(false);
+            setValue(0);
+        }
+        
+
     }
 
 
@@ -155,68 +217,22 @@ const FeedbackAndRatings = () => {
           errorMsg && <Typography color={'red'} textAlign={'center'} mt={'20px'}>{errorMsg}</Typography>
         }
         <Box onSubmit={handleparticipnatReview} mt={"30px"} component={"form"}>
-          <Box display={'flex'} gap={'20px'}>
-          <TextField
-            sx={{my: '13px'}}
-            fullWidth
-            id="outlined-basic"
-            label="Your Name"
-            name="name"
-            variant="outlined"
-          />
-          <TextField
-            sx={{my: '13px'}}
-            fullWidth
-            id="outlined-basic"
-            label="Age"
-            name="age"
-            variant="outlined"
-          />
-          </Box>
-          <Box display={'flex'} gap={'20px'}>
-          <TextField
-            sx={{my: '13px'}}
-            fullWidth
-            id="outlined-basic"
-            label="Phone"
-            name="phone"
-            variant="outlined"
-          />
-          </Box>
-         <Box>
-         <TextField
-            sx={{my: '13px'}}
-            fullWidth
-            id="outlined-basic"
-            label="Address"
-            name="address"
-            variant="outlined"
-          />
-         </Box>
-         <Box>
-         <TextField
-            sx={{my: '13px'}}
-            fullWidth
-            id="healthInfo"
-            label="bio"
-            name="bio"
-            variant="outlined"
-          />
-         <TextField
-            sx={{my: '13px'}}
-            fullWidth
-            id="socialLink"
-            label="Social Network Link"
-            name="socialLink"
-            variant="outlined"
-          />
-         </Box>
+        <Box textAlign={'center'}><Rating
+        name="simple-controlled"
+        value={value}
+        sx={{fontSize: '30px'}}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+      /></Box>
+          <input style={{marginTop: '20px',outline: 'none', width:'100%', padding:'12px',background: 'rgba(1,10,15,0.087605042016807)', border: 'none', borderRadius: '10px'}} type="file" name="selectImg" id="" />
+          <textarea style={{resize: 'none', width: '100%', padding: '15px', borderRadius: '10px',fontSize: '16px',outline:'none', background: 'rgba(1,10,15,0.087605042016807)', height: '150px', border:'none', marginTop: '20px'}} placeholder="Write your experience..." name="reviewText"></textarea>
           <Button 
           type="submit"
           sx={{bgcolor: '#0077B6', mt: '15px', color: '#ffffff', fontWeight: '600', py: '14px','&:hover': {background: '#0096C7', color: '#ffffff'}}}
           fullWidth 
           variant="contained"
-          >Save Changes</Button>
+          >Send Experience</Button>
         </Box>
       </Box>
     </Modal>
