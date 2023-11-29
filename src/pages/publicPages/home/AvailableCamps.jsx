@@ -18,8 +18,9 @@ import {
   } from "@mui/material";
   import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const AvailableCamps = () => {
-    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
     const [sortVal, setSortVal] = React.useState('');
     const handleChange = (event) => {
       setSortVal(event.target.value);
@@ -27,7 +28,7 @@ const AvailableCamps = () => {
     const { data: availableCamps = [] } = useQuery({
       queryKey: ["availableCampsList"],
       queryFn: async () => {
-        const fetchallCamps = await axiosPublic.get("/all_camps");
+        const fetchallCamps = await axiosSecure.get("/all_camps");
         const result = await fetchallCamps.data;
         return result;
       },
@@ -100,7 +101,7 @@ const AvailableCamps = () => {
                     Fees: <Typography variant="span" sx={{fontWeight: '600'}}>${camps?.camp_fees}</Typography>
                     </Typography>
                     <Typography variant="body1" color="text.secondary">
-                    Total participant: <Typography variant="span" sx={{fontWeight: '600'}}>123</Typography>
+                    Total participant: <Typography variant="span" sx={{fontWeight: '600'}}>{camps?.total_participants}</Typography>
                     </Typography>
                     </Box>
                     <Typography sx={{mt: '5px'}} variant="body1" color="text.secondary">

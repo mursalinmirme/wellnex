@@ -16,7 +16,7 @@ const style = {
   p: 4,
 };
 const currentTime = new Date();
-const RegistrationModal = ({ open, handleClose, fees, campId, camp_name, venue_location, camp_fees, camp_owner, scheduled_date_time }) => {
+const RegistrationModal = ({ open, handleClose, fees, campId, camp_name, venue_location, camp_fees, camp_owner, scheduled_date_time, refetch }) => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [gender, setgender] = React.useState('');
@@ -76,7 +76,15 @@ const RegistrationModal = ({ open, handleClose, fees, campId, camp_name, venue_l
   axiosSecure.post('/join-camp-reg', joinInfo)
   .then(res => {
     console.log(res.data);
-    toast.success("Join camp registrantion request successfully!");
+    Swal.fire({
+      position: "top-center",
+      icon: "success",
+      title: "Join camp registrantion request successfully!",
+      showConfirmButton: false,
+      timer: 2000
+    });
+    handleClose(false);
+    refetch();
     form.reset();
   })
 

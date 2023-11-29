@@ -54,7 +54,7 @@ const PopularCampusSection = () => {
                     Fees: <Typography variant="span" sx={{fontWeight: '600'}}>${camps?.camp_fees}</Typography>
                     </Typography>
                     <Typography variant="body1" color="text.secondary">
-                    Total participant: <Typography variant="span" sx={{fontWeight: '600'}}>123</Typography>
+                    Total participant: <Typography variant="span" sx={{fontWeight: '600'}}>{camps?.total_participants}</Typography>
                     </Typography>
                     </Box>
                     <Typography sx={{mt: '5px'}} variant="body1" color="text.secondary">
@@ -87,6 +87,7 @@ const PopularCampusSection = () => {
           );
         })}
       </Grid>
+      <Grid display={'flex'} justifyContent={'center'} alignItems={'center'} mt={'40px'}><Link to={'/available_camp'}><Button variant={'contained'} sx={{bgcolor: '#023E8A', color: '#ffffff', fontWeight: '600', py: '10px','&:hover': {background: '#0096C7', color: '#ffffff'}}}>See All Camps</Button></Link></Grid>
     </div>
   );
 };

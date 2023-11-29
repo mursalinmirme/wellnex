@@ -15,10 +15,12 @@ import toast from 'react-hot-toast';
 import useUserRole from '../../hooks/useUserRole';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { Helmet } from 'react-helmet';
+import axios from 'axios';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 const Signin = () => {
   const [errorMsg, setErrorMsg] = React.useState('');
   const { signinUserByEmail } = useAuth();
-  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -43,7 +45,7 @@ const Signin = () => {
           const signinUser = await signinUserByEmail(email, password);
           console.log(signinUser);
           toast.success("Login Successfully");
-          axiosSecure.get(`/user/${email}`)
+          axiosPublic.get(`/user/${email}`)
           .then(res => {
                   if(res.data.userRole === "Participants"){
                    return navigate('/dashboard/participant-profile')

@@ -12,16 +12,16 @@ const ContactUs = () => {
                 
                 <Box mb={'50px'}>
                     <Typography textAlign={'center'} fontSize={'32px'} fontWeight={'600'} paddingTop={'30px'}>Contact Us</Typography>
-                    <Typography textAlign={'center'} variant='body2'>Your healthy is Our Happyness </Typography>
-                    <Box width={'60%'} pt={'50px'} margin={'0 auto'}>
+                    <Typography textAlign={'center'} variant='body2' mt={'10px'}>Your healthy is Our Happiness </Typography>
+                    <Box width={'70%'} pt={'50px'} margin={'0 auto'}> 
                     <Paper sx={{padding: '20px'}}>
                     <Typography py={'30px'} textAlign={'center'} fontSize={'24px'} fontWeight={'600'}>Our Contact Information</Typography>
-                    <Typography fontSize={'24px'} fontWeight={'600'}>Email: wellnex@gmail.com</Typography>
-                    <Typography mt={'20px'} fontWeight={'600'} fontSize={'24px'}>Phone: 01746570521</Typography>
-                    <Typography mt={'20px'} fontWeight={'600'} fontSize={'24px'}>Address: Bhanga, Faridpur </Typography>
+                    <Typography sx={{color: '#33415c'}} fontSize={'24px'} fontWeight={'600'}>Email: wellnex@gmail.com</Typography>
+                    <Typography sx={{color: '#33415c'}} mt={'20px'} fontWeight={'600'} fontSize={'24px'}>Phone: 01746570521</Typography>
+                    <Typography sx={{color: '#33415c'}} mt={'20px'} fontWeight={'600'} fontSize={'24px'}>Address: Bhanga, Faridpur </Typography>
                     </Paper>
                     </Box>
-                    <Box width={'60%'} pt={'50px'} margin={'0 auto'}>
+                    <Box width={'70%'} pt={'50px'} margin={'0 auto'}>
                     <form action="">
                         <Typography textAlign={'center'} fontSize={'24px'} fontWeight={600}>Send Us a Feedback To Improve Our Service</Typography>
                         <Box sx={{marginTop: '30px'}}>

@@ -89,7 +89,7 @@ const ProfessionalsProfile = () => {
         
         <UpdateModalForm open={open} handleClose={handleClose} age={professional?.age ? professional?.age : ''} phone={professional?.phone ? professional?.phone : ''} gender={professional?.gender ? professional?.gender : ''} address={professional?.address ? professional?.address : ''} bio={professional?.bio ? professional?.bio : ''} link={professional?.link ? professional?.link : ''} role={professional?.role} refetch={refetch}></UpdateModalForm>
         {/* update edu modal */}
-        <UpdateQualification eduOpen={eduOpen} handleCloseEdu={handleCloseEdu} getSpecility={professional?.spacility ? professional?.spacility : '6'} refetch={refetch}>
+        <UpdateQualification eduOpen={eduOpen} handleCloseEdu={handleCloseEdu} getSpecility={professional?.specility ? professional?.specility : ''} refetch={refetch}>
 
         </UpdateQualification>
 

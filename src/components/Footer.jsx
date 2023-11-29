@@ -5,6 +5,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import footerBg from '../assets/footerBg.jpg';
 import SendIcon from '@mui/icons-material/Send';
+import { Link } from 'react-router-dom';
 const Footer = () => {
     return (
         <div style={{background: `url(${footerBg})`, position: 'relative', height: '420px', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
@@ -29,9 +30,9 @@ const Footer = () => {
                 <Box>
                     <h5 style={{color: 'white', fontSize: '18px', margin: '0 0'}}>Sitemap</h5>
                     <ul style={{listStyle: 'none', padding: '0', color: 'white'}}>
-                        <li style={{padding: '10px 0'}}>Available Camps</li>
+                        <Link style={{textDecoration: 'none', color: 'white'}} to={'/available_camp'}><li style={{padding: '10px 0'}}>Available Camps</li></Link>
                         <li style={{padding: '10px 0'}}>Dashboard</li>
-                        <li style={{padding: '10px 0'}}>Contact Us</li>
+                        <Link style={{textDecoration: 'none', color: 'white'}} to={'/contact_us'}><li style={{padding: '10px 0'}}>Contact Us</li></Link>
                         <li style={{padding: '10px 0'}}>Testimonials</li>
                     </ul>
                 </Box>

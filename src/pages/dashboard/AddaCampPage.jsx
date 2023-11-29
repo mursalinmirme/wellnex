@@ -10,6 +10,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import { Helmet } from "react-helmet";
+import Swal from "sweetalert2";
 const AddaCampPage = () => {
     const {user} = useAuth();
     const axiosSecure = useAxiosSecure();
@@ -26,7 +27,8 @@ const AddaCampPage = () => {
 
 
   const onSubmit = async (data) => {
-    setErrorMsg('')
+    setErrorMsg('');
+    const currentTime = new Date();
     const camp_name = data.camp_name;
     const camp_fees = data.camp_fees;
     const scheduled_date_time = startDate;
@@ -53,7 +55,7 @@ const AddaCampPage = () => {
 
     const uploadImagellink = uploadImgResp.data.display_url;
 
-    const newCamp = {camp_name, camp_fees, scheduled_date_time, venue_location, specialized_services:[specialized_services], healthcare_professionals:[healthcare_professionals], target_audience, description, image:uploadImagellink, campOwnerEmail: user?.email, campOwnerName: user?.displayName};
+    const newCamp = {camp_name, camp_fees, scheduled_date_time, venue_location, specialized_services:[specialized_services], healthcare_professionals:[healthcare_professionals], target_audience, description, image:uploadImagellink, campOwnerEmail: user?.email, campOwnerName: user?.displayName, create_time:currentTime, total_participants: 0};
     console.log(newCamp);
 
     if(uploadImgResp.success){
@@ -62,7 +64,13 @@ const AddaCampPage = () => {
             console.log(res.data);
             if(res.data.acknowledged){
                 reset();
-                toast.success('Your camp successfully added!')
+                Swal.fire({
+                  position: "top-center",
+                  icon: "success",
+                  title: "Your camp added successfully!",
+                  showConfirmButton: false,
+                  timer: 2000
+                });
             }
         })
         .catch(error => {
@@ -70,18 +78,9 @@ const AddaCampPage = () => {
     })
     }
 
-
     console.log(uploadImgResp);
 
-
-
-
-
-
-
   }
-
-
 
   return (
 
