@@ -120,7 +120,7 @@ const AvailableCamps = () => {
                 <CardActions>
                   <Link to={`/camps-details/${camps?._id}`}>
                   <Button sx={{bgcolor: '#0077B6', color: '#ffffff', fontWeight: '600', py: '8px','&:hover': {background: '#0096C7', color: '#ffffff'}}} style={{marginLeft: '10px', marginBottom: '15px'}} variant="contained" color="primary">
-                  Join Camp
+                  Details
                   </Button>
                   </Link>
                 </CardActions>

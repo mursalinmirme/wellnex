@@ -15,13 +15,13 @@ import PrivateRouter from "../privateRouter/PrivateRouter";
 import ParticipantProfile from "../pages/dashboard/ParticipantProfile";
 import RegisteredCamps from "../pages/dashboard/RegisteredCamps";
 import PaymentHistory from "../pages/dashboard/PaymentHistory";
-import FeedbackAndRatings from "../pages/publicPages/home/homeComponents/FeedbackAndRatings";
 import ProfessionalsProfile from "../pages/dashboard/ProfessionalsProfile";
 import ErrorPage from "../components/ErrorPage";
 import OrganizerRoute from "../privateRouter/OrganizerRoute";
 import ParticipantRoute from "../privateRouter/ParticipantRoute";
 import ProfessionalHealthCareRoute from "../privateRouter/ProfessionalHealthCareRoute";
 import PaymentPage from "../pages/dashboard/PaymentPage";
+import FeedbackAndRatings from "../pages/dashboard/FeedbackAndRatings";
 
 const router = createBrowserRouter([
     {

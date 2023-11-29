@@ -99,7 +99,7 @@ const PaymentHistory = () => {
     return (
         <Box>
             <Box py={'20px'}>
-                <Typography fontSize={'24px'} fontWeight={"600"} textAlign={'center'} component={'h4'}>Registered Camps:</Typography>
+                <Typography fontSize={'24px'} fontWeight={"600"} textAlign={'center'} component={'h4'}>Payment History:</Typography>
             </Box>
             <Table component={'table'}>
                 <TableHead component={'thead'}>
