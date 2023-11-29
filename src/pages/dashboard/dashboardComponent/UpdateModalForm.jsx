@@ -3,6 +3,7 @@ import * as React from 'react';
 import useAuth from '../../../hooks/useAuth'
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 const style = {
   position: "absolute",
   top: "50%",
@@ -48,11 +49,18 @@ const UpdateModalForm = ({open, handleClose, age, phone, gender, address, bio, l
     return
   }
 
-  axiosSecure.put(`/organizer/${user?.email}`, updateInfo)
+  axiosSecure.put(`/users/${user?.email}`, updateInfo)
   .then(res => {
     if(res.data.acknowledged){
-        toast.success("Your Profile updated successfully");
+      Swal.fire({
+        position: "top-center",
+        icon: "success",
+        title: "Profile Updated Successfully",
+        showConfirmButton: false,
+        timer: 2000
+      });
         refetch();
+        handleClose(false)
     }
 
   })

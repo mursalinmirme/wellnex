@@ -7,6 +7,7 @@ import { tr } from "date-fns/locale";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { Helmet } from "react-helmet";
 const PaymentHistory = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
@@ -98,6 +99,9 @@ const PaymentHistory = () => {
     })
     return (
         <Box>
+        <Helmet>
+            <title>Wellnex | Dashboard | Payment History</title>
+        </Helmet>
             <Box py={'20px'}>
                 <Typography fontSize={'24px'} fontWeight={"600"} textAlign={'center'} component={'h4'}>Payment History:</Typography>
             </Box>

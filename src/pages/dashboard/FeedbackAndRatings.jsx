@@ -9,6 +9,7 @@ import moment from "moment";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet";
 const style = {
     position: "absolute",
     top: "50%",
@@ -127,11 +128,10 @@ const FeedbackAndRatings = () => {
         );
         const uploadImgResp = await uploadImage.data;
 
-        console.log('review upload image res is', uploadImgResp.data.delete_url);
         const newReview = {
             reviewerName: user?.displayName,
             reviewerEmail: user?.email,
-            reviewImage: uploadImgResp.data.delete_url,
+            reviewImage: uploadImgResp.data.display_url,
             reviewStar: value,
             feedbackText: reviewText,
             date: reviewDate,
@@ -162,6 +162,9 @@ const FeedbackAndRatings = () => {
 
     return (
         <Box>
+          <Helmet>
+            <title>Wellnex | Dashboard | Feedback</title>
+          </Helmet>
             <Box py={'20px'}>
                 <Typography fontSize={'24px'} fontWeight={"600"} textAlign={'center'} component={'h4'}>Feedback & Ratings:</Typography>
             </Box>

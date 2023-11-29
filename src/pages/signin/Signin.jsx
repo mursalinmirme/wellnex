@@ -14,6 +14,7 @@ import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
 import useUserRole from '../../hooks/useUserRole';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { Helmet } from 'react-helmet';
 const Signin = () => {
   const [errorMsg, setErrorMsg] = React.useState('');
   const { signinUserByEmail } = useAuth();
@@ -65,6 +66,9 @@ const Signin = () => {
       };
     return (
         <div style={{width: '80%', margin: '0 auto', marginTop: '40px', marginBottom: '60px'}}>
+              <Helmet>
+                <title>Wellnex | Login</title>
+              </Helmet>
             <Grid container component="main">
         <Grid
           item

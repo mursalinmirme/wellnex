@@ -6,6 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import { tr } from "date-fns/locale";
 import Swal from "sweetalert2";
 import moment from "moment";
+import { Helmet } from "react-helmet";
 
 const ManageRegisteredPage = () => {
     const { user } = useAuth();
@@ -131,6 +132,9 @@ const ManageRegisteredPage = () => {
     })
     return (
         <Box>
+            <Helmet>
+        <title>Wellnex | Dashboard | manage camps</title>
+           </Helmet>
             <Box py={'20px'}>
                 <Typography fontSize={'24px'} fontWeight={"600"} textAlign={'center'} component={'h4'}>Manage Registered Camps</Typography>
             </Box>

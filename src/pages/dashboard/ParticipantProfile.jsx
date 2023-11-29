@@ -5,6 +5,7 @@ import Loading from "../../loading/Loading";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import UpdateModalForm from "./dashboardComponent/UpdateModalForm";
+import { Helmet } from 'react-helmet';
 const ParticipantProfile = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
@@ -19,6 +20,10 @@ const ParticipantProfile = () => {
         }
     })
     return (
+        <>
+        <Helmet>
+            <title>Wellnex | Dashboard | Participant Profile</title>
+        </Helmet>
         <Paper sx={{width: '98%', padding: '10px'}}>
             <Box sx={{background: 'linear-gradient(90deg, rgba(3,4,94,0.9192927170868347) 0%, rgba(2,62,138,0.9080882352941176) 53%, rgba(0,119,182,0.9585084033613446) 100%)', padding: '30px 0px'}} textAlign={'center'}>
             <img style={{width: '200px', height: '200px', borderRadius: '50%'}} src={participant?.image} alt="" />
@@ -29,7 +34,7 @@ const ParticipantProfile = () => {
             <Button onClick={handleOpen} variant="contained" sx={{mt: '20px'}}>Update Information</Button>
             </Box>
 
-            <UpdateModalForm open={open} handleClose={handleClose} age={participant?.age ? participant?.age : ''} phone={participant?.phone ? participant?.phone : ''} gender={participant?.gender ? participant?.gender : ''} address={participant?.address ? participant?.address : ''} bio={participant?.age ? participant?.bio : ''} link={participant?.link ? participant?.link : ''} role={participant?.role} refetch={refetch}></UpdateModalForm>
+            <UpdateModalForm open={open} handleClose={handleClose} age={participant?.age ? participant?.age : ''} phone={participant?.phone ? participant?.phone : ''} gender={participant?.gender ? participant?.gender : ''} address={participant?.address ? participant?.address : ''} bio={participant?.bio ? participant?.bio : ''} link={participant?.link ? participant?.link : ''} role={participant?.role} refetch={refetch}></UpdateModalForm>
             <Box padding={'50px 20px'}>
                 <Typography fontSize={'18px'} py={'15px'}><span style={{fontWeight: '600'}}>Age:</span> {participant?.age || <span style={{fontWeight: '500', color: '#6d6875'}}>Not set</span>}</Typography>
                 <Typography fontSize={'18px'} py={'15px'}><span style={{fontWeight: '600'}}>Gender:</span> {participant?.gender || <span style={{fontWeight: '500', color: '#6d6875'}}>Not set</span>}</Typography>
@@ -40,6 +45,7 @@ const ParticipantProfile = () => {
                 
             </Box>
         </Paper>
+        </>
     );
 };
 

@@ -4,11 +4,15 @@ import PopularCampusSection from './homeComponents/PopularCampusSection';
 import Testimonials from './homeComponents/Testimonials';
 import UpCommingCamps from './homeComponents/UpCommingCamps';
 import WellnessBlogs from './homeComponents/WellnessBlogs';
+import { Helmet } from 'react-helmet';
 
 const Home = () => {
     
     return (
-        <div style={{}}>
+        <div>
+            <Helmet>
+        <title>Wellnex | Home</title>
+           </Helmet>
             <Banner></Banner>
             <PopularCampusSection></PopularCampusSection>
             <Testimonials></Testimonials>

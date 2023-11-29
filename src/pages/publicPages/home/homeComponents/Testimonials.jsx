@@ -9,6 +9,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
+import moment from "moment";
 const Testimonials = () => {
   const axiosPublic = useAxiosPublic();
   const { data: rattings = [] } = useQuery({
@@ -19,7 +20,7 @@ const Testimonials = () => {
       return result;
     },
   });
-  console.log(rattings);
+  console.log('ratings',rattings);
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>
       <Box>
@@ -56,12 +57,13 @@ const Testimonials = () => {
                   alignItems={"center"}
                 >
                   <Box>
-                    <img style={{width: '80px', height: '80px', borderRadius: '50%'}} src={ratting?.image} alt="" />
+                    <img style={{width: '80px', height: '80px', borderRadius: '50%'}} src={ratting?.reviewImage} alt="" />
                     </Box>
                   <Box mt={'10px'} display={"flex"} justifyContent={"center"}>
                     <Rating
                       name="half-rating"
-                      defaultValue={2.5}
+                      // defaultValue={2.5}
+                      value={ratting?.reviewStar}
                       precision={0.5}
                     />
                   </Box>
@@ -69,7 +71,7 @@ const Testimonials = () => {
                     textAlign={"center"}
                     sx={{ mt: "15px", fontWeight: 700, fontSize: "22px" }}
                   >
-                    Womens Health Symposium
+                    {ratting?.camp_name}
                   </Typography>
                   <Typography
                     sx={{
@@ -79,15 +81,13 @@ const Testimonials = () => {
                       lineHeight: "150%",
                     }}
                   >
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Voluptatibus facilis pariatur tempore incidunt accusantium
-                    voluptas repellendus magnam, neque nemo explicabo.
+                    {ratting?.feedbackText}
                   </Typography>
                   <Typography
                     textAlign={"center"}
                     sx={{ fontSize: "18px", fontWeight: "700", mt: "15px" }}
                   >
-                    29 April 2023
+                    {moment(ratting?.date).format('LL')}
                   </Typography>
                 </Box>
               </SwiperSlide>

@@ -4,9 +4,12 @@ export const AuthContext = createContext(null);
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import app from "../firebase.config";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 const auth = getAuth(app);
 
 const AuthProvider = ({children}) => {
+    const axiosPublic = useAxiosPublic();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     // create user
@@ -38,7 +41,19 @@ const AuthProvider = ({children}) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
-            setLoading(false);
+            if(currentUser){
+                const loggerEmail = currentUser?.email;
+                axiosPublic.post('/jwt', {email: loggerEmail})
+                .then(res => {
+                    localStorage.setItem('token', res.data.token);
+                    setLoading(false);
+                })
+                
+            }else{
+                localStorage.removeItem('token');
+                setLoading(false);
+
+            }
         })
         return () => {
             unSubscribe()

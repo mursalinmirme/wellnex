@@ -14,6 +14,7 @@ import useAuth from "../../hooks/useAuth";
 import moment from "moment/moment";
 import Swal from "sweetalert2";
 import UpdateCampsData from "./dashboardComponent/UpdateCampsData";
+import { Helmet } from "react-helmet";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: '#0077B6',
@@ -90,6 +91,9 @@ const ManageCamps = () => {
 
     return (
         <div>
+          <Helmet>
+        <title>Wellnex | Dashboard | manage camps</title>
+           </Helmet>
             <Box>
                 <Typography fontSize={'28px'} fontWeight={'600'} textAlign={'center'} mt={'20px'}>Manage Camps</Typography>
             </Box>

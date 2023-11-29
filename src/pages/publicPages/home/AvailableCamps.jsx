@@ -17,6 +17,7 @@ import {
     Typography,
   } from "@mui/material";
   import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 const AvailableCamps = () => {
     const axiosPublic = useAxiosPublic();
     const [sortVal, setSortVal] = React.useState('');
@@ -45,6 +46,9 @@ const AvailableCamps = () => {
 
     return (
         <div style={{ width: "80%", margin: "0 auto" }}>
+        <Helmet>
+        <title>Wellnex | Available Camps</title>
+        </Helmet>
         <Box>
            <Box display={'flex'} alignItems={'center'} mt={'30px'} justifyContent={'space-between'}>
              <form onSubmit={handleSearchBar} style={{border: '2px solid #03045E'}}>

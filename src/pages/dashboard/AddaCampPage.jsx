@@ -9,6 +9,7 @@ import axios from "axios";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
+import { Helmet } from "react-helmet";
 const AddaCampPage = () => {
     const {user} = useAuth();
     const axiosSecure = useAxiosSecure();
@@ -85,6 +86,9 @@ const AddaCampPage = () => {
   return (
 
     <Paper sx={{padding: '20px'}}>
+      <Helmet>
+        <title>Wellnex | Dashboard | Add Camps</title>
+      </Helmet>
         <Box>
         <Typography textAlign={'center'} fontWeight={'600'} fontSize={'28px'} mt={'30px'}>Add a New Camp</Typography>
         <label htmlFor=""></label>

@@ -19,6 +19,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet";
 
 const Signup = () => {
   const [errorMsg, setErrorMsg] = React.useState('');
@@ -141,6 +142,9 @@ const Signup = () => {
   };
   return (
     <div style={{ width: "80%", margin: "0 auto", marginTop: "40px", marginBottom: '60px' }}>
+      <Helmet>
+        <title>Wellnex | Sign Up</title>
+      </Helmet>
       <Grid container component="main">
         <Grid
           item
