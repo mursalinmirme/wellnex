@@ -1,7 +1,7 @@
 import { Box, Button, FormControl, InputLabel, Modal, Rating, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField, TextareaAutosize, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import * as React from 'react';
-import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
@@ -82,14 +82,6 @@ const FeedbackAndRatings = () => {
         },
     ]
 
-
-
-    const table = useReactTable({
-        data, 
-        columns,
-        getCoreRowModel: getCoreRowModel(),
-    })
-
     // open modal 
     const handleOpen = async (reviewerCampId) => {
         setOpen(true);
@@ -156,7 +148,22 @@ const FeedbackAndRatings = () => {
     }
 
 
-
+    const [filtering, setFiltering] = React.useState('');
+    const [sorting, setSorting] = React.useState([]);
+    const table = useReactTable({
+        data, 
+        columns,
+        getCoreRowModel: getCoreRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        state: {
+            globalFilter: filtering,
+            sorting: sorting,
+        }, 
+        onGlobalFilterChange: setFiltering,
+        onSortingChange: setSorting
+    })
 
 
 
@@ -168,6 +175,12 @@ const FeedbackAndRatings = () => {
             <Box py={'20px'}>
                 <Typography fontSize={'24px'} fontWeight={"600"} textAlign={'center'} component={'h4'}>Feedback & Ratings:</Typography>
             </Box>
+            <TextField 
+                 sx={{width: '40%'}}
+                label={'search...'}
+                value={filtering}
+                onChange={(e) => setFiltering(e.target.value)}
+            ></TextField>
             <Table component={'table'}>
                 <TableHead component={'thead'}>
                 {table.getHeaderGroups().map(headerGroup => (
@@ -200,6 +213,16 @@ const FeedbackAndRatings = () => {
                     
                 </TableBody>
             </Table>
+            <Box display={'flex'} mt={'20px'} mb={'20px'} gap={'20px'}>
+            <Button variant="outlined"
+            disabled={!table.getCanPreviousPage}
+            onClick={() => table.previousPage()}
+            >Previous Page</Button>
+            <Button variant="outlined"
+            disabled={!table.getCanNextPage()}
+            onClick={() => table.nextPage()}
+            >Next Page</Button>
+            </Box>
             <Modal
       open={open}
       onClose={handleClose}

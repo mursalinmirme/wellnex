@@ -1,12 +1,13 @@
-import { Box, Button, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Button, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { tr } from "date-fns/locale";
 import Swal from "sweetalert2";
 import moment from "moment";
 import { Helmet } from "react-helmet";
+import { useState } from "react";
 
 const ManageRegisteredPage = () => {
     const { user } = useAuth();
@@ -125,10 +126,21 @@ const ManageRegisteredPage = () => {
 
 
 
+    const [filtering, setFiltering] = useState('');
+    const [sorting, setSorting] = useState([]);
     const table = useReactTable({
         data, 
         columns,
         getCoreRowModel: getCoreRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        state: {
+            globalFilter: filtering,
+            sorting: sorting,
+        }, 
+        onGlobalFilterChange: setFiltering,
+        onSortingChange: setSorting
     })
     return (
         <Box>
@@ -138,6 +150,12 @@ const ManageRegisteredPage = () => {
             <Box py={'20px'}>
                 <Typography fontSize={'24px'} fontWeight={"600"} textAlign={'center'} component={'h4'}>Manage Registered Camps</Typography>
             </Box>
+            <TextField 
+                 sx={{width: '40%'}}
+                label={'search...'}
+                value={filtering}
+                onChange={(e) => setFiltering(e.target.value)}
+            ></TextField>
             <Table component={'table'}>
                 <TableHead component={'thead'}>
                 {table.getHeaderGroups().map(headerGroup => (
@@ -170,6 +188,16 @@ const ManageRegisteredPage = () => {
                     
                 </TableBody>
             </Table>
+            <Box display={'flex'} mt={'20px'} mb={'20px'} gap={'20px'}>
+            <Button variant="outlined"
+            disabled={!table.getCanPreviousPage}
+            onClick={() => table.previousPage()}
+            >Previous Page</Button>
+            <Button variant="outlined"
+            disabled={!table.getCanNextPage()}
+            onClick={() => table.nextPage()}
+            >Next Page</Button>
+            </Box>
         </Box>
     );
 };
