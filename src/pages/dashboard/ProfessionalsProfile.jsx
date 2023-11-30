@@ -37,11 +37,12 @@ const ProfessionalsProfile = () => {
     return (
         <div>
             <Helmet>
-            <title>Wellnex | Dashboard | Professional Profile</title>
+            <title>Wellnex | Dashboard | Professional Dashboard | Profile</title>
             </Helmet>
-            <Navbar></Navbar>
-            <Box sx={{width: '80%', margin: '0 auto'}}>
-                <Paper sx={{ padding: '10px'}}>
+            <Box>
+                <Box>
+                <Box sx={{width: '100%', margin: '0 auto'}}>
+                <Paper sx={{ padding: '0px'}}>
             <Box sx={{background: 'linear-gradient(90deg, rgba(3,4,94,0.9192927170868347) 0%, rgba(2,62,138,0.9080882352941176) 53%, rgba(0,119,182,0.9585084033613446) 100%)', padding: '30px 0px'}} textAlign={'center'}>
             <img style={{width: '200px', height: '200px', borderRadius: '50%'}} src={professional?.image} alt="" />
             <Typography color={'white'} fontSize={'32px'} fontWeight={'600'} textAlign={'center'} mt={'20px'}>{professional?.name}</Typography>
@@ -96,8 +97,9 @@ const ProfessionalsProfile = () => {
         <UploadCertifications cerOpen={cerOpen} handleCloseCer={handleCloseCer} refetch={refetch}></UploadCertifications>
 
 
-        </Box>
-            <Footer></Footer>
+            </Box>
+                </Box>
+            </Box>
         </div>
     );
 };

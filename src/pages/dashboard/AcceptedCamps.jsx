@@ -5,17 +5,17 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { tr } from "date-fns/locale";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
 import moment from "moment";
 import { Helmet } from "react-helmet";
 import { useState } from "react";
-const PaymentHistory = () => {
+
+const AcceptedCamps = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const {data: data=[], refetch} = useQuery({
-        queryKey: ['participantpaymentList'],
+        queryKey: ['professionalacceptedStatus'],
         queryFn: async () => {
-           const result = await axiosSecure.get(`/participant-payment-history?email=${user?.email}`);
+           const result = await axiosSecure.get(`/professionals-requesting?email=${user?.email}`);
             return result.data;
         }
     })
@@ -23,45 +23,40 @@ const PaymentHistory = () => {
 
 
 
-
     const columns = [
         {
             header: 'Camp Name',
-            accessorKey: 'camp_name',
+            accessorKey: 'campInfo.camp_name',
         },
         {
             header: 'Date_Time',
-            accessorKey: 'scheduled_date_time',
+            accessorKey: 'campInfo.scheduled_date_time',
             cell: ({value, row}) => (
                 <Box><Typography>{moment(row.original.scheduled_date_time).format('LLL')}</Typography></Box>
             )
         },
         {
             header: 'Venue',
-            accessorKey: 'venue_location',
+            accessorKey: 'campInfo.venue_location',
         },
         {
-            header: 'Camp_Fees',
-            accessorKey: 'camp_fees',
+            header: 'Target Audience',
+            accessorKey: 'campInfo.target_audience',
         },
         {
-            header: 'payment_status',
-            accessorKey: 'payment_status',
+            header: 'Accepted Status',
+            accessorKey: 'status',
             cell: ({value, row}) => (
-                <Box><Button sx={{color: 'green'}} variant="outlined">{row.original.payment_status}</Button></Box>
-            )
-        },
-        {
-            header: 'confirmation_stauts',
-            accessorKey: 'confirmation',
-            cell: ({value, row}) => (
-                <Box><Button sx={{color: 'green'}} variant="outlined">{row.original.confirmation}</Button></Box>
+                <Box>
+                    {row.original.status == "Pending" ? <Button variant="outlined" sx={{color: 'red'}}>Pending</Button> : <Button variant="outlined" sx={{color: 'green'}}>Confirmed</Button>}
+                </Box>
             )
         },
 
     ]
 
-    
+
+
     const [filtering, setFiltering] = useState('');
     const [sorting, setSorting] = useState([]);
     const table = useReactTable({
@@ -78,14 +73,13 @@ const PaymentHistory = () => {
         onGlobalFilterChange: setFiltering,
         onSortingChange: setSorting
     })
-
     return (
         <Box>
-        <Helmet>
-            <title>Wellnex | Dashboard | Payment History</title>
-        </Helmet>
+            <Helmet>
+        <title>Wellnex | Dashboard | manage camps</title>
+           </Helmet>
             <Box py={'20px'}>
-                <Typography fontSize={'24px'} fontWeight={"600"} textAlign={'center'} component={'h4'}>Payment History:</Typography>
+                <Typography fontSize={'24px'} fontWeight={"600"} textAlign={'center'} component={'h4'}>Accepted Camps</Typography>
             </Box>
             <TextField 
                  sx={{width: '40%'}}
@@ -138,4 +132,6 @@ const PaymentHistory = () => {
         </Box>
     );
 };
-export default PaymentHistory;
+
+export default AcceptedCamps;
+

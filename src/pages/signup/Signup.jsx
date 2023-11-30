@@ -130,7 +130,7 @@ const Signup = () => {
                    return navigate('/dashboard/organizer-profile');
                   }
                   if(res.data.userRole === "Healthcare Professionals"){
-                   return navigate('/professional-profile');
+                   return navigate('/professional-dashboard');
                   }
           })
     }catch(error){

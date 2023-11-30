@@ -4,14 +4,49 @@ import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { tr } from "date-fns/locale";
+import * as React from 'react';
 import Swal from "sweetalert2";
 import moment from "moment";
 import { Helmet } from "react-helmet";
 import { useState } from "react";
-
+import ParticipantsViewingModal from "./dashboardComponent/ParticipantsViewingModal";
+import ProfListView from "./dashboardComponent/ProfListView";
+import UpcommingCampsUpdateModal from "./dashboardComponent/UpcommingCampsUpdateModal";
 const ManageUpcommingCamps = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
+    // actions modal related
+    const [open, setOpen] = React.useState(false);
+    const [upCampId, setupCampId] = useState('');
+    const [profCampId, setProfCampId] = useState('');
+    const handleOpen = (upCampId) => {
+        setupCampId(upCampId)
+        setOpen(true);
+    };
+    const handleClose = () => setOpen(false);
+    // actions modal for professionals list
+    const [openProf, setOpenProf] = React.useState(false);
+    const handleOpenProfessional = (profId) => {
+        setProfCampId(profId)
+        setOpenProf(true);
+    };
+    const handleCloseProfList = () => setOpenProf(false);
+    // actions modal for accept petitcipants list
+
+    // actions modal for professionals list
+    const [openUpdateUpCams, setopenUpdateUpCams] = React.useState(false);
+    const handleUpCampsUpdate = () => setopenUpdateUpCams(true);
+    const handleCloseUpdateCams = () => setopenUpdateUpCams(false);
+
+
+    const handleUpCampsDelete = () => {
+        alert('delete btn clicked')
+    }
+
+    const handleUpcommingPublish = () => {
+        alert('published btn clicked')
+    }
+
     const {data: data=[], refetch} = useQuery({
         queryKey: ['manageRegistrations'],
         queryFn: async () => {
@@ -20,64 +55,64 @@ const ManageUpcommingCamps = () => {
         }
     })
     console.log(data);
-    const handleConfirmation = (regId) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You want to confirmed the registration!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-          }).then((result) => {
+    // const handleConfirmation = (regId) => {
+    //     Swal.fire({
+    //         title: "Are you sure?",
+    //         text: "You want to confirmed the registration!",
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#3085d6",
+    //         cancelButtonColor: "#d33",
+    //         confirmButtonText: "Yes, delete it!"
+    //       }).then((result) => {
 
-            if (result.isConfirmed) {
-                axiosSecure.patch(`/payment-status/${regId}`)
-                .then(res => {
-                if(res.data.operatonStatus === 'success'){
-                refetch()
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Registration confirmation successfully!",
-                    icon: "success"
-                  });
-                 }
-                })
+    //         if (result.isConfirmed) {
+    //             axiosSecure.patch(`/payment-status/${regId}`)
+    //             .then(res => {
+    //             if(res.data.operatonStatus === 'success'){
+    //             refetch()
+    //             Swal.fire({
+    //                 title: "Deleted!",
+    //                 text: "Registration confirmation successfully!",
+    //                 icon: "success"
+    //               });
+    //              }
+    //             })
               
-            }
-          });
+    //         }
+    //       });
         
-    }
+    // }
 
-    const handleDeleteRegisteredCamps = (deleteId) => {
-        console.log('delete id is', deleteId);
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You want to delete the participant registered camp!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-          }).then((result) => {
+    // const handleDeleteRegisteredCamps = (deleteId) => {
+    //     console.log('delete id is', deleteId);
+    //     Swal.fire({
+    //         title: "Are you sure?",
+    //         text: "You want to delete the participant registered camp!",
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#3085d6",
+    //         cancelButtonColor: "#d33",
+    //         confirmButtonText: "Yes, delete it!"
+    //       }).then((result) => {
 
-            if (result.isConfirmed) {
-                axiosSecure.delete(`/participant-register-camp/${deleteId}`)
-                .then(res => {
-                    console.log(res.data);
-                if(res.data.acknowledged){
-                refetch()
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Registration cancellision successfully!",
-                    icon: "success"
-                  });
-                 }
-                })
+    //         if (result.isConfirmed) {
+    //             axiosSecure.delete(`/participant-register-camp/${deleteId}`)
+    //             .then(res => {
+    //                 console.log(res.data);
+    //             if(res.data.acknowledged){
+    //             refetch()
+    //             Swal.fire({
+    //                 title: "Deleted!",
+    //                 text: "Registration cancellision successfully!",
+    //                 icon: "success"
+    //               });
+    //              }
+    //             })
               
-            }
-          });
-    }
+    //         }
+    //       });
+    // }
 
 
 
@@ -114,13 +149,11 @@ const ManageUpcommingCamps = () => {
             accessorKey: '_id',
             cell: ({ value, row }) => (
                 <Box display={'flex'} flexDirection={'column'} gap={'10px'}>
-                    <Button sx={{background: ''}} variant="contained">Review Participants</Button>
-                    <Button sx={{background: ''}} variant="contained">Review Professionals</Button>
-                    <Button sx={{background: ''}} variant="contained">Accept Participants</Button>
-                    <Button sx={{background: ''}} variant="contained">Accept Professionals</Button>
-                    <Button sx={{background: ''}} variant="contained">Publish</Button>
-                    <Button sx={{background: ''}} variant="contained">Update</Button>
-                    <Button sx={{background: 'red'}} variant="contained">Delete</Button>
+                    <Button onClick={() => handleOpen(row.original?._id)} sx={{background: '#023E8A'}} variant="contained" size="small">Review Participants</Button>
+                    <Button onClick={() => handleOpenProfessional(row.original?._id)} sx={{background: '#023E8A'}} variant="contained" size="small">Review Professionals</Button>
+                    <Button onClick={handleUpcommingPublish} sx={{background: '#90E0EF', color: 'black', fontWeight: '600'}} variant="contained" size="small">Publish</Button>
+                    <Button onClick={handleUpCampsUpdate} sx={{background: '#90E0EF', color: 'black', fontWeight: '600'}} variant="contained" size="small">Update</Button>
+                    <Button onClick={handleUpCampsDelete} sx={{background: 'red'}} variant="contained" size="small">Delete</Button>
                 </Box>
             )
         },
@@ -200,6 +233,18 @@ const ManageUpcommingCamps = () => {
             onClick={() => table.nextPage()}
             >Next Page</Button>
             </Box>
+
+            {open &&<ParticipantsViewingModal upCampId={upCampId} open={open} handleClose={handleClose}></ParticipantsViewingModal>}
+
+           {openProf && <ProfListView profCampId={profCampId} openProf={openProf} handleCloseProfList={handleCloseProfList}></ProfListView>}
+
+
+           <UpcommingCampsUpdateModal updateId={'djfdkjf'} openUpdateUpCams={openUpdateUpCams} handleCloseUpdateCams={handleCloseUpdateCams} refetch={refetch}></UpcommingCampsUpdateModal>
+
+
+
+
+
         </Box>
     );
 };

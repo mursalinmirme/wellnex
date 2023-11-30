@@ -17,7 +17,7 @@ const style = {
   p: 4,
 };
 const currentTime = new Date();
-const ProfessionalUpCommingCampInterest = ({ openProf, handleCloseProfessionalRegOpen, campId, camp_name, venue_location, camp_fees, camp_owner, scheduled_date_time, refetch }) => {
+const ProfessionalUpCommingCampInterest = ({ openProf, handleCloseProfessionalRegOpen, campId, camp_name, venue_location, camp_fees, camp_owner, scheduled_date_time, target_audience, refetch }) => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [errorMsg, setErrorMsg] = React.useState('');
@@ -35,7 +35,7 @@ const ProfessionalUpCommingCampInterest = ({ openProf, handleCloseProfessionalRe
     const professionalImage = user?.photoURL;
     const camp_id = campId;
 
-  const submitInterest = {name, specialization, contactInformation, professionalEmail, professionalImage, reg_time:currentTime, campInfo:{camp_id, camp_name, venue_location, camp_fees, scheduled_date_time, camp_owner } }
+  const submitInterest = {name, specialization, contactInformation, professionalEmail, professionalImage, reg_time:currentTime, status:'Pending', campInfo:{camp_id, camp_name, venue_location, target_audience, camp_fees, scheduled_date_time, camp_owner } }
 
 
   if(!name){

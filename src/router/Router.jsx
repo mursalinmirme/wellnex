@@ -25,6 +25,8 @@ import FeedbackAndRatings from "../pages/dashboard/FeedbackAndRatings";
 import AddUpcommingCamps from "../pages/dashboard/AddUpcommingCamps";
 import UpcommingCampsDetails from "../pages/publicPages/UpcommingCampsDetails";
 import ManageUpcommingCamps from "../pages/dashboard/ManageUpcommingCamps";
+import ProfessionalDashboard from "../pages/dashboard/ProfessionalDashboard";
+import AcceptedCamps from "../pages/dashboard/AcceptedCamps";
 
 const router = createBrowserRouter([
     {
@@ -113,10 +115,30 @@ const router = createBrowserRouter([
             },
         ]
     },
+    // {
+    //     path: 'professional-profile', 
+    //     element: <PrivateRouter><ProfessionalHealthCareRoute><ProfessionalsProfile></ProfessionalsProfile></ProfessionalHealthCareRoute></PrivateRouter>,
+    //     errorElement: <ErrorPage></ErrorPage>,
+    //     children:[
+    //         {
+                
+    //         }
+    //     ]
+    // }
     {
-        path: 'professional-profile', 
-        element: <PrivateRouter><ProfessionalHealthCareRoute><ProfessionalsProfile></ProfessionalsProfile></ProfessionalHealthCareRoute></PrivateRouter>,
-        errorElement: <ErrorPage></ErrorPage>
+        path: '', 
+        element: <PrivateRouter><ProfessionalHealthCareRoute><ProfessionalDashboard></ProfessionalDashboard></ProfessionalHealthCareRoute></PrivateRouter>,
+        errorElement: <ErrorPage></ErrorPage>,
+        children:[
+            {
+                path: 'professional-dashboard',
+                element: <PrivateRouter><ProfessionalHealthCareRoute><ProfessionalsProfile></ProfessionalsProfile></ProfessionalHealthCareRoute></PrivateRouter>,
+            },
+            {
+                path: 'accepted-camps',
+                element: <PrivateRouter><ProfessionalHealthCareRoute><AcceptedCamps></AcceptedCamps></ProfessionalHealthCareRoute></PrivateRouter>,
+            },
+        ]
     }
 ])
 

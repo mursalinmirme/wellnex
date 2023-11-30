@@ -75,7 +75,7 @@ const UpcommingCampsDetails = () => {
             {/* participant modal data */}
             <UpcommingRegistrationModal open={open} handleClose={handleClose} fees={camp?.camp_fees} camp_name={camp?.camp_name} venue_location={camp?.venue_location} camp_fees={camp?.camp_fees} campId={camp?._id} camp_owner={camp?.campOwnerEmail} scheduled_date_time={camp?.scheduled_date_time} refetch={refetch}></UpcommingRegistrationModal>
             {/* professional modal data */}
-            <ProfessionalUpCommingCampInterest openProf={openProf} handleCloseProfessionalRegOpen={handleCloseProfessionalRegOpen} camp_name={camp?.camp_name} venue_location={camp?.venue_location} camp_fees={camp?.camp_fees} campId={camp?._id} camp_owner={camp?.campOwnerEmail} scheduled_date_time={camp?.scheduled_date_time} refetch={refetch}></ProfessionalUpCommingCampInterest>
+            <ProfessionalUpCommingCampInterest openProf={openProf} handleCloseProfessionalRegOpen={handleCloseProfessionalRegOpen} camp_name={camp?.camp_name} venue_location={camp?.venue_location} camp_fees={camp?.camp_fees} target_audience={camp?.target_audience} campId={camp?._id} camp_owner={camp?.campOwnerEmail} scheduled_date_time={camp?.scheduled_date_time} refetch={refetch}></ProfessionalUpCommingCampInterest>
 
 
         </div>

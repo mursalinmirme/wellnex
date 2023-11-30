@@ -6,7 +6,7 @@ import { Paper } from "@mui/material";
 import DashboardNavItems from "./dashboardComponent/DashboardNavItems";
 const Dashboard = () => {
     return (
-        <div>
+        <div style={{maxWidth: '1536px', margin: '0 auto'}}>
             <Navbar></Navbar>
             <div style={{display: 'flex', gap: '20px', marginTop: '30px', margin: '0 auto'}}>
                 <Paper style={{minHeight: '70vh', width: '350px', padding: '10px', marginTop: '10px', marginBottom: '10px' ,background: '#023E8A'}}>

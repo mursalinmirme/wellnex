@@ -277,7 +277,7 @@ const Navbar = () => {
               }
               {
                 getRole?.userRole === 'Healthcare Professionals' && 
-                <NavLink style={{textDecoration: 'none'}} to={'/professional-profile'}>
+                <NavLink style={{textDecoration: 'none'}} to={'/professional-dashboard'}>
                 {({ isActive }) => (
                     <Button
                   className={isActive ? "activedfdfdfLinkNav" : ""}
