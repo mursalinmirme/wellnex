@@ -46,7 +46,7 @@ const AvailableCamps = () => {
 
 
     return (
-        <div style={{ width: "80%", margin: "0 auto" }}>
+        <div style={{ width: "80%", margin: "0 auto", marginBottom: '60px'}}>
         <Helmet>
         <title>Wellnex | Available Camps</title>
         </Helmet>

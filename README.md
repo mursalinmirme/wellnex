@@ -1,9 +1,7 @@
 <b>Project Name: Wellnex</b>
 <br>
-<p>Credentials: optional under category___assignment12_category_0016</p>
-<br>
+<p>Credentials: optional </p>
 <P>Live Link: https://wellnexs.web.app/</p>
-</br>
 <b>Five Project Features</b>
 <br>
 ⚫ <b>Dashboard:</b>

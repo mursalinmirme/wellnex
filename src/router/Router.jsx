@@ -22,6 +22,9 @@ import ParticipantRoute from "../privateRouter/ParticipantRoute";
 import ProfessionalHealthCareRoute from "../privateRouter/ProfessionalHealthCareRoute";
 import PaymentPage from "../pages/dashboard/PaymentPage";
 import FeedbackAndRatings from "../pages/dashboard/FeedbackAndRatings";
+import AddUpcommingCamps from "../pages/dashboard/AddUpcommingCamps";
+import UpcommingCampsDetails from "../pages/publicPages/UpcommingCampsDetails";
+import ManageUpcommingCamps from "../pages/dashboard/ManageUpcommingCamps";
 
 const router = createBrowserRouter([
     {
@@ -40,6 +43,10 @@ const router = createBrowserRouter([
             {
                 path: 'camps-details/:id',
                 element: <PrivateRouter><CampDetails></CampDetails></PrivateRouter>
+            },
+            {
+                path: 'upcomming-camps-details/:id',
+                element: <PrivateRouter><UpcommingCampsDetails></UpcommingCampsDetails></PrivateRouter>
             },
             {
                 path: 'contact_us',
@@ -67,6 +74,14 @@ const router = createBrowserRouter([
             {
                 path: 'add-a-camp',
                 element: <PrivateRouter><OrganizerRoute><AddaCampPage></AddaCampPage></OrganizerRoute></PrivateRouter>
+            },
+            {
+                path: 'add-upcoming-camp',
+                element: <PrivateRouter><OrganizerRoute><AddUpcommingCamps></AddUpcommingCamps></OrganizerRoute></PrivateRouter>
+            },
+            {
+                path: 'manage-upcoming-camps',
+                element: <PrivateRouter><OrganizerRoute><ManageUpcommingCamps></ManageUpcommingCamps></OrganizerRoute></PrivateRouter>
             },
             {
                 path: 'manage-camps',

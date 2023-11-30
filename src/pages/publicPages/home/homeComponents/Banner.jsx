@@ -10,12 +10,14 @@ import { Button } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Autoplay, Pagination } from "swiper/modules";
+import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 
 const Banner = () => {
+  const axiosPublic = useAxiosPublic();
   const { data: banners = [] } = useQuery({
     queryKey: ["mybanners"],
     queryFn: async () => {
-      const fetchBanners = await axios("./banners.json");
+      const fetchBanners = await axiosPublic.get("/banners");
       const result = await fetchBanners.data;
       return result;
     },

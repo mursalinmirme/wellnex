@@ -12,11 +12,12 @@ import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import { Helmet } from "react-helmet";
 import Swal from "sweetalert2";
-const AddaCampPage = () => {
+
+const AddUpcommingCamps = () => {
     const {user} = useAuth();
     const axiosSecure = useAxiosSecure();
     const [errorMsg, setErrorMsg] = useState('');
-    const [uploadLoading, setUploadLoading] = useState(false);
+    const [uploadLoading, setUploadloading] = useState(false);
     const [startDate, setStartDate] = useState(
         // setHours(setMinutes(new Date(), 30), 16),
       );
@@ -30,7 +31,7 @@ const AddaCampPage = () => {
 
   const onSubmit = async (data) => {
     setErrorMsg('');
-    setUploadLoading(true)
+    setUploadloading(true);
     const currentTime = new Date();
     const camp_name = data.camp_name;
     const camp_fees = data.camp_fees;
@@ -43,7 +44,7 @@ const AddaCampPage = () => {
     const camp_image = data.camp_image[0];
 
     if(!startDate){
-        setUploadLoading(false)
+        setUploadloading(false);
         setErrorMsg('Select shedule time');
         return
     }
@@ -59,11 +60,11 @@ const AddaCampPage = () => {
 
     const uploadImagellink = uploadImgResp.data.display_url;
 
-    const newCamp = {camp_name, camp_fees, scheduled_date_time, venue_location, specialized_services:[specialized_services], healthcare_professionals:[healthcare_professionals], target_audience, description, image:uploadImagellink, campOwnerEmail: user?.email, campOwnerName: user?.displayName, create_time:currentTime, total_participants: 0};
+    const newCamp = {camp_name, camp_fees, scheduled_date_time, venue_location, specialized_services:[specialized_services], healthcare_professionals:[healthcare_professionals], target_audience, description, image:uploadImagellink, campOwnerEmail: user?.email, campOwnerName: user?.displayName, create_time:currentTime, total_participants: 0, total_interests: 0};
     console.log(newCamp);
 
     if(uploadImgResp.success){
-        axiosSecure.post('/add-a-camp', newCamp)
+        axiosSecure.post('/add-a-upcomming-camp', newCamp)
         .then(res => {
             console.log(res.data);
             if(res.data.acknowledged){
@@ -71,11 +72,11 @@ const AddaCampPage = () => {
                 Swal.fire({
                   position: "top-center",
                   icon: "success",
-                  title: "Your camp added successfully!",
+                  title: "Your upcomming camp added successfully!",
                   showConfirmButton: false,
                   timer: 2000
                 });
-                setUploadLoading(false);
+                setUploadloading(false);
             }
         })
         .catch(error => {
@@ -89,12 +90,12 @@ const AddaCampPage = () => {
 
   return (
 
-    <Paper sx={{padding: '20px'}}>
+    <Paper sx={{padding: '20px', marginBottom: '30px'}}>
       <Helmet>
         <title>Wellnex | Dashboard | Add Camps</title>
       </Helmet>
         <Box>
-        <Typography textAlign={'center'} fontWeight={'600'} fontSize={'28px'} mt={'30px'}>Add a New Camp</Typography>
+        <Typography textAlign={'center'} fontWeight={'600'} fontSize={'28px'} mt={'30px'}>Add a Upcomming New Camp</Typography>
         <label htmlFor=""></label>
         <form style={{width: '80%', margin: '0 auto', marginTop: '30px'}} onSubmit={handleSubmit(onSubmit)}>
 
@@ -170,8 +171,7 @@ const AddaCampPage = () => {
 
       </Box>
 
-
-      <Button fullWidth variant="contained" sx={{bgcolor: '#0077B6', marginTop: '40px', color: '#ffffff', fontSize: '18px', py: '10px','&:hover': {background: '#0096C7', color: '#ffffff'}}} type="submit">
+       <Button fullWidth variant="contained" sx={{bgcolor: '#0077B6', marginTop: '40px', color: '#ffffff', fontSize: '18px', py: '10px','&:hover': {background: '#0096C7', color: '#ffffff'}}} type="submit">
           {uploadLoading ? <CircularProgress size={'32px'} style={{color: 'white'}}></CircularProgress> : 'Submit Camp'}
         </Button>
 
@@ -181,4 +181,4 @@ const AddaCampPage = () => {
   )
 }
 
-export default AddaCampPage;
+export default AddUpcommingCamps;

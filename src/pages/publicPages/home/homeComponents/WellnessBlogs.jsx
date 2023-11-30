@@ -15,7 +15,7 @@ const WellnessBlogs = () => {
       });
       console.log('blogs are',blogs);
   return (
-    <div style={{ width: "80%", margin: "0 auto" }}>
+    <div style={{ width: "80%", margin: "0 auto", marginBottom: '60px'}}>
       <Box textAlign={"center"} sx={{ mt: "70px" }}>
         <Typography
           sx={{ fontSize: "32px", fontWeight: "600", color: "#03045E" }}

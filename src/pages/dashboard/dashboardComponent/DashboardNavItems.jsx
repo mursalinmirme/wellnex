@@ -49,6 +49,26 @@ const DashboardNavItems = () => {
               </span>
               )}
             </NavLink>
+                <NavLink style={{textDecoration: 'none'}} to={'/dashboard/add-upcoming-camp'}>
+              {({ isActive }) => (
+                  <span
+                className={isActive ? "activedashboardRoute" : ""}
+                style={{ padding: '20px', color: '#ffffff', display: 'block', fontSize: '18px', fontWeight: '500' }}
+              >
+                Add Upcoming Camps
+              </span>
+              )}
+            </NavLink>
+                <NavLink style={{textDecoration: 'none'}} to={'/dashboard/manage-upcoming-camps'}>
+              {({ isActive }) => (
+                  <span
+                className={isActive ? "activedashboardRoute" : ""}
+                style={{ padding: '20px', color: '#ffffff', display: 'block', fontSize: '18px', fontWeight: '500' }}
+              >
+                Manage Upcoming Camps
+              </span>
+              )}
+            </NavLink>
                 </> :
                 <>
                 <NavLink style={{textDecoration: 'none'}} to={'/dashboard/participant-profile'}>
