@@ -3,8 +3,6 @@ import { createContext, useEffect, useState } from "react";
 export const AuthContext = createContext(null);
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import app from "../firebase.config";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 const auth = getAuth(app);
 
@@ -12,6 +10,8 @@ const AuthProvider = ({children}) => {
     const axiosPublic = useAxiosPublic();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+
+
     // create user
     const createUser = (email, password) => {
         setLoading(true)
@@ -58,7 +58,8 @@ const AuthProvider = ({children}) => {
         return () => {
             unSubscribe()
         }
-    }, [])
+    }, [ axiosPublic ])
+
 
     // user sign in
     const authInfo = {

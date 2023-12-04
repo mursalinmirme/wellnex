@@ -17,9 +17,9 @@ const WellnessBlogs = () => {
       console.log('blogs are',blogs);
   return (
     <Box sx={{ width: {xs: '95%', sm: '80%', lg: "80%"}, margin: "0 auto", marginBottom: '60px'}}>
-      <Box textAlign={"center"} sx={{ mt: "70px" }}>
+      <Box sx={{ mt: "90px", textAlign: 'center' }}>
         <Typography
-          sx={{ fontSize: "32px", fontWeight: "600", color: "#03045E" }}
+          sx={{ fontSize: {xs: '25px', sm: "32px"}, fontWeight: "700", background: '#90E0EF', display: 'inline-block', padding: '0px 20px', borderRadius: '20px 0px 20px 0px' }}
         >
           Wellness Blogs
         </Typography>

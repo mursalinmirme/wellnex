@@ -28,9 +28,9 @@ const PopularCampusSection = () => {
   // console.log(popularComps);
   return (
     <Box sx={{ width: {xs: '95%', sm: '80%', lg: '80%'}, margin: "0 auto" }}>
-      <Box textAlign={"center"} sx={{mt: '60px'}}>
+      <Box sx={{ mt: "60px", textAlign: 'center' }}>
         <Typography
-          sx={{ fontSize: "32px", fontWeight: "600" }}
+         sx={{ fontSize: {xs: '25px', sm: "32px"}, fontWeight: "700", background: '#90E0EF', display: 'inline-block', padding: '0px 20px', borderRadius: '20px 0px 20px 0px' }}
         >
           Popular Medical Camps
         </Typography>

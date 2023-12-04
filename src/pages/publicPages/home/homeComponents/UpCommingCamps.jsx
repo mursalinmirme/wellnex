@@ -28,10 +28,10 @@ const UpCommingCamps = () => {
   console.log('data from',upCommingCamps);
   return (
     <Box sx={{ width: {xs: '95%', sm: "80%"}, margin: "0 auto", paddingTop: '40px' }}>
-      <Box sx={{ mt: "60px" }}>
+      <Box sx={{ mt: "60px", textAlign: 'center' }}>
         <Typography
           textAlign={"center"}
-          sx={{ fontSize: {xs: '25px', sm: "32px"}, fontWeight: "700" }}
+          sx={{ fontSize: {xs: '25px', sm: "32px"}, fontWeight: "700", background: '#90E0EF', display: 'inline-block', padding: '0px 20px', borderRadius: '20px 0px 20px 0px' }}
         >
           Upcomming Camps
         </Typography>
@@ -40,6 +40,7 @@ const UpCommingCamps = () => {
         <Swiper
           // slidesPerView={3}
           spaceBetween={30}
+          loop={true}
           autoplay={{
             delay: 2000,
             disableOnInteraction: false,

@@ -22,19 +22,21 @@ const Testimonials = () => {
   });
   console.log('ratings',rattings);
   return (
-    <Box sx={{ width: {xs: '95%', xl: '80%'}, margin: "0 auto" }}>
-      <Box>
+    <Box sx={{ width: {xs: '95%', xl: '80%'}, margin: "0 auto"}}>
+      <Box sx={{ mt: "90px", textAlign: 'center' }}>
         <Typography
           textAlign={"center"}
-          sx={{ mt: "60px", fontSize: "32px", fontWeight: "600" }}
+          sx={{ fontSize: {xs: '25px', sm: "32px"}, fontWeight: "700", background: '#90E0EF', display: 'inline-block', padding: '0px 20px', borderRadius: '20px 0px 20px 0px' }}
         >
           Testimonials
         </Typography>
       </Box>
-      <div style={{ marginTop: "20px" }}>
+      <Box sx={{ marginTop: "50px", background: 'linear-gradient(90deg, rgba(72,202,228,0.8408613445378151) 0%, rgba(144,224,239,0.6503851540616247) 53%)', borderRadius: '90px 10px 90px 10px'}}>
         <Swiper
           spaceBetween={30}
           centeredSlides={true}
+          loop={true}
+          
           autoplay={{
             delay: 2000,
             disableOnInteraction: false,
@@ -95,7 +97,7 @@ const Testimonials = () => {
             );
           })}
         </Swiper>
-      </div>
+      </Box>
     </Box>
   );
 };

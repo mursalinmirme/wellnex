@@ -61,12 +61,10 @@ const AddUpcommingCamps = () => {
     const uploadImagellink = uploadImgResp.data.display_url;
 
     const newCamp = {camp_name, camp_fees, scheduled_date_time, venue_location, specialized_services:[specialized_services], healthcare_professionals:[healthcare_professionals], target_audience, description, image:uploadImagellink, campOwnerEmail: user?.email, campOwnerName: user?.displayName, create_time:currentTime, total_participants: 0, total_interests: 0};
-    console.log(newCamp);
 
     if(uploadImgResp.success){
         axiosSecure.post('/add-a-upcomming-camp', newCamp)
         .then(res => {
-            console.log(res.data);
             if(res.data.acknowledged){
                 reset();
                 Swal.fire({
@@ -80,11 +78,9 @@ const AddUpcommingCamps = () => {
             }
         })
         .catch(error => {
-            console.log(error.message);
+           toast.error(error.message)
     })
     }
-
-    console.log(uploadImgResp);
 
   }
 

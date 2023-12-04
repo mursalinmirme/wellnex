@@ -19,7 +19,7 @@ const AcceptedCamps = () => {
             return result.data;
         }
     })
-    console.log(data);
+
 
 
 

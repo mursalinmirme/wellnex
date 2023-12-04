@@ -1,41 +1,44 @@
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import * as React from "react";
+import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import signup from "../../assets/signup.jpg";
 import useAuth from "../../hooks/useAuth";
-import toast from "react-hot-toast";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-import CircularProgress from '@mui/material/CircularProgress';
 // select related
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import { Helmet } from "react-helmet";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Signup = () => {
-  const [errorMsg, setErrorMsg] = React.useState('');
+  const [errorMsg, setErrorMsg] = React.useState("");
   const { createUser, updateUserProfile } = useAuth();
   const [createLoading, setCreatLoading] = React.useState(false);
   const axiosPublic = useAxiosPublic();
-  const [age, setAge] = React.useState('');
+  const [age, setAge] = React.useState("");
   const axiosSecure = useAxiosSecure();
+
+  const { user } = useAuth();
+
   const navigate = useNavigate();
   const handleChange = (event) => {
     setAge(event.target.value);
     console.log(event.target.value);
   };
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    setErrorMsg('');
+    setErrorMsg("");
     const data = new FormData(event.currentTarget);
     const name = data.get("name");
     const email = data.get("email");
@@ -45,103 +48,133 @@ const Signup = () => {
     // console.log('User role is', userRole);
     setCreatLoading(true);
     // validations
-    if(!name){
-      setErrorMsg('Please enter your name');
-      setCreatLoading(false);
-      return
-    }
-    if(!email){
-      setErrorMsg('Please enter your email');
-      setCreatLoading(false);
-      return
-    }
-    if(!password){
-      setErrorMsg('Please enter your password');
-      setCreatLoading(false);
-      return
-    }
-    if(!/^.{6,}$/.test(password)){
-      setErrorMsg('password should be at least 6 character ');
-      setCreatLoading(false);
-      return
-    }
-    if(!userRole){
-      setErrorMsg('Please select your role');
-      setCreatLoading(false);
-      return
-    }
-    if(!profilePic.name){
-      setErrorMsg('Please select you profile picture');
-      setCreatLoading(false);
-      return
-    }
-    
-    if (profilePic.type !== 'image/jpeg' && profilePic.type !== 'image/jpg' && profilePic.type !== 'image/png') {
-      setErrorMsg('Please select jpeg, jpg or png format Image');
+    if (!name) {
+      setErrorMsg("Please enter your name");
       setCreatLoading(false);
       return;
     }
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-      setErrorMsg('Please enter a valid email');
+    if (!email) {
+      setErrorMsg("Please enter your email");
       setCreatLoading(false);
-      return
+      return;
+    }
+    if (!password) {
+      setErrorMsg("Please enter your password");
+      setCreatLoading(false);
+      return;
+    }
+    if (!/^.{6,}$/.test(password)) {
+      setErrorMsg("password should be at least 6 character ");
+      setCreatLoading(false);
+      return;
+    }
+    if (!userRole) {
+      setErrorMsg("Please select your role");
+      setCreatLoading(false);
+      return;
+    }
+    if (!profilePic.name) {
+      setErrorMsg("Please select you profile picture");
+      setCreatLoading(false);
+      return;
     }
 
-    try{
-      const creatAccount = await createUser(email, password);
-      const result = creatAccount.user;
-      console.log(result);
-    }catch(error){
+    if (
+      profilePic.type !== "image/jpeg" &&
+      profilePic.type !== "image/jpg" &&
+      profilePic.type !== "image/png"
+    ) {
+      setErrorMsg("Please select jpeg, jpg or png format Image");
       setCreatLoading(false);
-      toast.error(error.message)
-      return
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setErrorMsg("Please enter a valid email");
+      setCreatLoading(false);
+      return;
     }
 
-    const formData = new FormData();
-    formData.append("image", profilePic);
-    // upload profile pic
-    const uploadImage = await axios.post(
-      `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_imageBB_API}`,
-      formData
-    );
-    const uploadImgResp = await uploadImage.data;
-
-    try{
-      await updateUserProfile(
-        name,
-        uploadImgResp.data.display_url
-      );
-      // save user data into database
-      const usersData = {
-        name,
-        email,
-        image: uploadImgResp.data.display_url,
-        role: userRole
-      }
-      axiosPublic.post('/users', usersData);
-      setCreatLoading(false);
-      toast.success('Registration successfull');
-      axiosSecure.get(`/user/${email}`)
-          .then(res => {
-                  if(res.data.userRole === "Participants"){
-                   return navigate('/dashboard/participant-profile')
-                  }
-                  if(res.data.userRole === "Organizers"){
-                   return navigate('/dashboard/organizer-profile');
-                  }
-                  if(res.data.userRole === "Healthcare Professionals"){
-                   return navigate('/professional-dashboard');
-                  }
+    createUser(email, password)
+      .then((res) => {
+        const formData = new FormData();
+        formData.append("image", profilePic);
+        // upload profile pic
+        axios
+          .post(
+            `https://api.imgbb.com/1/upload?key=${
+              import.meta.env.VITE_imageBB_API
+            }`,
+            formData
+          )
+          .then((resp) => {
+            const uploadImgUrl = resp.data.data.display_url;
+            updateUserProfile(name, resp.data.data.display_url)
+              .then(() => {
+                // console.log('profile update result', updateResp);
+                const usersData = {
+                  name,
+                  email,
+                  image: uploadImgUrl,
+                  role: userRole,
+                };
+                axiosPublic
+                  .post("/users", usersData)
+                  .then(() => {
+                    axiosSecure
+                      .get(`/user/${email}`)
+                      .then((roleResp) => {
+                        if (roleResp.data.userRole === "Participants") {
+                          setCreatLoading(false);
+                          toast.success("Registration successfull");
+                          return navigate("/dashboard/participant-profile");
+                        }
+                        if (roleResp.data.userRole === "Organizers") {
+                          setCreatLoading(false);
+                          toast.success("Registration successfull");
+                          return navigate("/dashboard/organizer-profile");
+                        }
+                        if (
+                          roleResp.data.userRole === "Healthcare Professionals"
+                        ) {
+                          setCreatLoading(false);
+                          toast.success("Registration successfull");
+                          return navigate("/professional-dashboard");
+                        }
+                      })
+                      .catch((rollErr) => {
+                        setCreatLoading(false);
+                        toast.error(rollErr.message);
+                      });
+                  })
+                  .catch((dbErr) => {
+                    setCreatLoading(false);
+                    toast.error(dbErr.message);
+                  });
+              })
+              .catch((updateChatch) => {
+                setCreatLoading(false);
+                toast.error(updateChatch.message);
+              });
           })
-    }catch(error){
-      setCreatLoading(false);
-      toast.error(error.message);
-    }
-
-
+          .catch((error) => {
+            setCreatLoading(false);
+            toast.error(error.message);
+          });
+      })
+      .catch((err) => {
+        setCreatLoading(false);
+        toast.error(err.message);
+      });
   };
   return (
-    <Box sx={{ width: {xs: "95%", lg: "80%"}, margin: "0 auto", marginTop: "40px", marginBottom: '60px' }}>
+    <Box
+      sx={{
+        width: { xs: "95%", lg: "80%" },
+        margin: "0 auto",
+        marginTop: "40px",
+        marginBottom: "60px",
+      }}
+    >
       <Helmet>
         <title>Wellnex | Sign Up</title>
       </Helmet>
@@ -183,10 +216,17 @@ const Signup = () => {
               Sign Up
             </Typography>
             {errorMsg && (
-              <Typography py={'10px'} color={'red'} component="p" fontWeight={"500"} variant="p">
+              <Typography
+                py={"10px"}
+                color={"red"}
+                component="p"
+                fontWeight={"500"}
+                variant="p"
+              >
                 {errorMsg}
               </Typography>
             )}
+            <Typography>{user?.email}</Typography>
             <Box
               component="form"
               noValidate
@@ -223,24 +263,28 @@ const Signup = () => {
                 id="password"
                 autoComplete="current-password"
               />
-              <Box mt={'15px'} sx={{ minWidth: 120 }}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Account Type</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={age}
-                  name="userRole"
-                  label="Account Type"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={'Participants'}>Participants</MenuItem>
-                  <MenuItem value={'Organizers'}>Organizers</MenuItem>
-                  <MenuItem value={'Healthcare Professionals'}>Healthcare Professionals</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-              <Grid mt={'10px'} py={"7px"}>
+              <Box mt={"15px"} sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Account Type
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={age}
+                    name="userRole"
+                    label="Account Type"
+                    onChange={handleChange}
+                  >
+                    <MenuItem value={"Participants"}>Participants</MenuItem>
+                    <MenuItem value={"Organizers"}>Organizers</MenuItem>
+                    <MenuItem value={"Healthcare Professionals"}>
+                      Healthcare Professionals
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+              <Grid mt={"10px"} py={"7px"}>
                 <Typography variant="body1" mb={"3px"}>
                   Upload Profile:
                 </Typography>
@@ -264,7 +308,14 @@ const Signup = () => {
                     "&:hover": { background: "#0096C7", color: "#ffffff" },
                   }}
                 >
-                 {createLoading ? <CircularProgress size={'28px'} sx={{color: '#ffffff'}}></CircularProgress> :  'Sign UP'}
+                  {createLoading ? (
+                    <CircularProgress
+                      size={"28px"}
+                      sx={{ color: "#ffffff" }}
+                    ></CircularProgress>
+                  ) : (
+                    "Sign UP"
+                  )}
                 </Button>
               </Grid>
               <Grid mt={"25px"} textAlign={"center"}>

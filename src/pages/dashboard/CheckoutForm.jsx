@@ -26,7 +26,6 @@ const {data: clientSecret} = useQuery({
         return result.data.clientSecret;
     }
 })
-console.log('I got pt', clientSecret);
   const handleSubmit = async (event) => {
     // Block native form submission.
     event.preventDefault();
@@ -49,7 +48,6 @@ console.log('I got pt', clientSecret);
     });
 
     if (error) {
-      console.log('[error]', error);
       setPaymentLoading(false);
       setErrorMsg(error.message);
     } else {

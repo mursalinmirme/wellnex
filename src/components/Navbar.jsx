@@ -39,7 +39,7 @@ const pages = [
 ]
 
 const Navbar = () => {
-  const { user, logoutUser, loading, setUser } = useAuth();
+  const { user, loading, logoutUser } = useAuth();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const getRole = useUserRole();
@@ -69,7 +69,6 @@ const Navbar = () => {
       toast.error(error.message)
     })
   }
-
 
     return (
         <AppBar style={{background: 'linear-gradient(90deg, rgba(3,4,94,0.9329061624649859) 0%, rgba(0,150,193,0.88) 53%, rgba(0,119,182,1) 100%)', padding: '11px 0'}} position="static">
@@ -232,6 +231,7 @@ const Navbar = () => {
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
+              
             }}
           >
             WellNex
@@ -262,7 +262,7 @@ const Navbar = () => {
             </NavLink>
             
             {
-              getRole?.userRole === 'Participants' && 
+              user?.photoURL && getRole?.userRole === 'Participants' && 
                 <NavLink style={{textDecoration: 'none'}} to={'/dashboard/participant-profile'}>
                 {({ isActive }) => (
                     <Button
@@ -276,7 +276,7 @@ const Navbar = () => {
                </NavLink>
               }
               {
-                getRole?.userRole === 'Organizers' && 
+                user?.photoURL && getRole?.userRole === 'Organizers' && 
                 <NavLink style={{textDecoration: 'none'}} to={'/dashboard/organizer-profile'}>
                 {({ isActive }) => (
                     <Button
@@ -290,7 +290,7 @@ const Navbar = () => {
                </NavLink>
               }
               {
-                getRole?.userRole === 'Healthcare Professionals' && 
+                user?.photoURL && getRole?.userRole === 'Healthcare Professionals' && 
                 <NavLink style={{textDecoration: 'none'}} to={'/professional-dashboard'}>
                 {({ isActive }) => (
                     <Button
@@ -373,7 +373,7 @@ const Navbar = () => {
             : 
             <Box display={'flex'} gap={'30px'}>
             <Link to={'/signup'}>
-            <Button sx={{bgcolor: '#00B4D8', color: '#ffffff', fontWeight: '600', py: '8px','&:hover': {background: '#0096C7', color: '#ffffff'}}} variant='contained'>Signup</Button>
+            <Button sx={{bgcolor: '#00B4D8', color: '#ffffff', fontWeight: '600', py: '8px', display: {xs: 'none', sm: 'inline-block'}, textUnderlineOffset: 'none','&:hover': {background: '#0096C7', color: '#ffffff'}}} variant='contained'>Signup</Button>
             </Link>
             <Link to={'/signin'}>
             <Button sx={{bgcolor: '#00B4D8', color: '#ffffff', fontWeight: '600', py: '8px','&:hover': {background: '#0096C7', color: '#ffffff'}}} variant='contained'>Login</Button>
