@@ -5,8 +5,8 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-
-import { Button } from "@mui/material";
+import './Banner.css';
+import { Box, Button, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Autoplay, Pagination } from "swiper/modules";
@@ -30,8 +30,8 @@ const Banner = () => {
         }} modules={[Autoplay, Pagination]} className="mySwiper">
         {banners.map((banner) => {
           return (
-            <SwiperSlide key={banner?.id} style={{ height: "680px" }}>
-              <div style={{ position: "relative" }}>
+            <SwiperSlide key={banner?.id}>
+              <Box sx={{ position: "relative", height: {xs: '550px', sm: '500px', lg: "680px"} }}>
                 <img
                   style={{
                     height: "680px",
@@ -43,49 +43,54 @@ const Banner = () => {
                   alt=""
                 />
                 {/* banner content */}
-                <div
-                  style={{
+                <Box
+                  sx={{
                     position: "absolute",
                     top: "0",
                     background:
                       "linear-gradient(90deg, rgba(3,4,94,0.9108893557422969) 0%, rgba(0,150,199,0.8016456582633054) 47%, rgba(121,147,149,0.499124649859944) 100%)",
                     width: "100%",
                     height: "100%",
-                    padding: "0 60px",
+                    padding: {xs: "0 20px", sm: "0 60px", lg:"0 60px"},
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "left",
                   }}
                 >
                   <div>
-                    <h2
-                      style={{
-                        fontSize: "56px",
+                    <Typography
+                    component={'h2'}
+                    variant=""
+                      className="bannerTitle"
+                      sx={{
+                        fontSize:{xs: '30px', sm: "40px", lg:'56px'},
                         color: "#ffffff",
-                        width: "50%",
+                        width: {xs: '100%', lg:"50%"},
                         lineHeight: "150%",
                         marginBottom: "10px",
                       }}
+                      
+                      
                     >
                       {banner?.title}
-                    </h2>
-                    <p
-                      style={{
+                    </Typography>
+                    <Typography
+                      sx={{
                         color: "#FFFFFF",
-                        width: "50%",
-                        lineHeight: "150%",
-                        fontSize: "18px",
-                        marginTop: "0px",
+                        width: {xs: '100%', lg:"50%"},
+                        fontSize: {xs: '16px', sm: "18px"},
+                        marginBottom: "20px",
+                        lineHeight: '180%'
                       }}
                     >
                       {banner?.description}
-                    </p>
+                    </Typography>
                     <Button size="large" sx={{bgcolor: 'white', color: '#023E8A', fontWeight: '700', py: '11px',marginTop: '5px', fontSize: '16px','&:hover': {background: '#0077B6', color: '#ffffff'}}} variant="contained" endIcon={<ArrowForwardIcon />}>
                       JOin NOw
                     </Button>
                   </div>
-                </div>
-              </div>
+                </Box>
+              </Box>
             </SwiperSlide>
           );
         })}

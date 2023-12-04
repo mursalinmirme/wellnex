@@ -2,11 +2,12 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { Paper } from "@mui/material"
+import { Button, Paper } from "@mui/material"
 import { useForm } from "react-hook-form"
 import '../AddaCampPage.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import CircularProgress from '@mui/material/CircularProgress';
 import { setHours, setMinutes } from 'date-fns';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
@@ -28,21 +29,22 @@ const style = {
   overflowY: 'auto',
   p: 4,
 };
-const UpcommingCampsUpdateModal = ({updateId, openUpdateUpCams, handleCloseUpdateCams, refetch}) => {
+const UpcommingCampsUpdateModal = ({savUpdateId, openUpdateUpCams, handleCloseUpdateCams, refetch}) => {
     const {user} = useAuth();
     const axiosSecure = useAxiosSecure();
     const [errorMsg, setErrorMsg] = React.useState('');
+    const [uploadLoading, setUploadloading] = React.useState(false);
     const [startDate, setStartDate] = React.useState(
         // setHours(setMinutes(new Date(), 30), 16),
       );
   
   const {data: camp_details=[]} = useQuery({
-    queryKey: ['getUpdateCampDetails'],
+    queryKey: ['updateUpcommingCamps'],
     enabled: openUpdateUpCams,
     queryFn: async () => {
-        const result = await axiosSecure.get(`/organizers-camps/${updateId}`);
+        const result = await axiosSecure.get(`/upcomming-camps-get/${savUpdateId}`);
         const getResult = await result.data;
-        setStartDate(new Date(getResult?.scheduled_date_time))
+        console.log('I got this man', getResult);
         return getResult;
     }
   })
@@ -50,6 +52,7 @@ const UpcommingCampsUpdateModal = ({updateId, openUpdateUpCams, handleCloseUpdat
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg('')
+    setUploadloading(true)
     const data = e.target;
     const camp_name = data.camp_name.value;
     const camp_fees = data.camp_fees.value;
@@ -81,7 +84,9 @@ const UpcommingCampsUpdateModal = ({updateId, openUpdateUpCams, handleCloseUpdat
         .then(res => {
             if(res.data.acknowledged){
                refetch();
+               setUploadloading(false)
                return toast.success("Camp update successfully.");
+               
             }
         })
 
@@ -92,6 +97,7 @@ const UpcommingCampsUpdateModal = ({updateId, openUpdateUpCams, handleCloseUpdat
          .then(res => {
              if(res.data.acknowledged){
                  refetch();
+                 setUploadloading(false);
                 return toast.success("Camp updated successfully.")
              }
          })
@@ -110,7 +116,7 @@ const UpcommingCampsUpdateModal = ({updateId, openUpdateUpCams, handleCloseUpdat
       >
         <Paper sx={style}>
         <Box>
-        <Typography textAlign={'center'} fontWeight={'600'} fontSize={'28px'} mt={'10px'}>Update Camp</Typography>
+        <Typography textAlign={'center'} fontWeight={'600'} fontSize={'28px'} mt={'10px'}>Update Upcomming Camp</Typography>
         <label htmlFor=""></label>
         <form style={{width: '90%', margin: '0 auto', marginTop: '0px'}} onSubmit={handleSubmit}>
 
@@ -181,8 +187,10 @@ const UpcommingCampsUpdateModal = ({updateId, openUpdateUpCams, handleCloseUpdat
 
       </Box>
 
+      <Button variant="contained" style={{width: '100%', padding: '8px', fontSize: '18px', color: 'white', fontWeight: '600', marginTop:'30px'}} type="submit">
+                {uploadLoading ? <CircularProgress size={'32px'} style={{color: 'white'}}></CircularProgress> : 'Update'}
+                </Button>
 
-      <input style={{width: '100%', padding: '15px 0', marginTop: '30px', fontSize: '18px', background: '#0077B6', color: '#ffffff', outline: 'none', border:'none'}} type="submit" value={'Submit Camp'} />
 
     </form>
         </Box>

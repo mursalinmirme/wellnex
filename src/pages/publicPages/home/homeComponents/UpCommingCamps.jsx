@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
@@ -27,29 +27,47 @@ const UpCommingCamps = () => {
   });
   console.log('data from',upCommingCamps);
   return (
-    <div style={{ width: "80%", margin: "0 auto", paddingTop: '40px' }}>
+    <Box sx={{ width: {xs: '95%', sm: "80%"}, margin: "0 auto", paddingTop: '40px' }}>
       <Box sx={{ mt: "60px" }}>
         <Typography
           textAlign={"center"}
-          sx={{ fontSize: "32px", fontWeight: "700" }}
+          sx={{ fontSize: {xs: '25px', sm: "32px"}, fontWeight: "700" }}
         >
           Upcomming Camps
         </Typography>
       </Box>
-      <Box sx={{ mt: "40px" }}>
+      <Box sx={{ mt: {xs: '0px', lg: "40px"} }}>
         <Swiper
-          slidesPerView={3}
+          // slidesPerView={3}
           spaceBetween={30}
+          autoplay={{
+            delay: 2000,
+            disableOnInteraction: false,
+          }}
           pagination={{
             clickable: true,
           }}
-          modules={[Pagination]}
+          modules={[Autoplay, Pagination]}
           className="mySwiper"
+          breakpoints={{
+            640: {
+              slidesPerView: 1,
+              spaceBetween: 20,
+            },
+            768: {
+              slidesPerView: 1,
+              spaceBetween: 40,
+            },
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 30,
+            },
+          }}
         >
           {upCommingCamps.map((campsComing) => {
             return (
                 <SwiperSlide key={campsComing?._id}>
-              <Card sx={{ maxWidth: 395, padding: '40px 0' }}>
+              <Card sx={{ maxWidth: {xs: 'auto', lg: 395}, padding: '40px 0' }}>
                 <CardActionArea display={"flex"} variant="div">
                   <Box sx={{position: 'relative'}}>
                   <CardMedia
@@ -82,7 +100,7 @@ const UpCommingCamps = () => {
                     </Typography>
                     <Box display={'flex'} justifyContent={'space-between'}>
                     <p style={{fontSize: '17px', fontWeight: '500'}}><span style={{color: '#022b3a'}}>Total Interest</span>: {campsComing?.total_interests}</p>
-                    <p style={{fontSize: '17px', fontWeight: '500'}}><span style={{color: '#022b3a'}}>Total Participant</span>: {campsComing?.total_interests}</p>
+                    <p style={{fontSize: '17px', fontWeight: '500'}}><span style={{color: '#022b3a'}}>Total Participant</span>: {campsComing?.total_participants}</p>
                     </Box>
                     {/* <Typography>Audience: {campsComing?.total_interests}</Typography> */}
                     <Typography textAlign={'center'}>{
@@ -106,7 +124,7 @@ const UpCommingCamps = () => {
           })}
         </Swiper>
       </Box>
-    </div>
+    </Box>
   );
 };
 

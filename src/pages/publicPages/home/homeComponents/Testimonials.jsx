@@ -22,7 +22,7 @@ const Testimonials = () => {
   });
   console.log('ratings',rattings);
   return (
-    <div style={{ width: "80%", margin: "0 auto" }}>
+    <Box sx={{ width: {xs: '95%', xl: '80%'}, margin: "0 auto" }}>
       <Box>
         <Typography
           textAlign={"center"}
@@ -36,7 +36,7 @@ const Testimonials = () => {
           spaceBetween={30}
           centeredSlides={true}
           autoplay={{
-            delay: 455500,
+            delay: 2000,
             disableOnInteraction: false,
           }}
           pagination={{
@@ -75,8 +75,9 @@ const Testimonials = () => {
                   </Typography>
                   <Typography
                     sx={{
-                      width: "60%",
+                      width: {xs: '80%', sm: '80%', lg:'60%'},
                       margin: "0 auto",
+                      textAlign:{xs: 'center'},
                       mt: "15px",
                       lineHeight: "150%",
                     }}
@@ -95,7 +96,7 @@ const Testimonials = () => {
           })}
         </Swiper>
       </div>
-    </div>
+    </Box>
   );
 };
 

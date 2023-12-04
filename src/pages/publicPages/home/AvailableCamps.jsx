@@ -35,28 +35,28 @@ const AvailableCamps = () => {
     });
     console.log('data from',availableCamps);
 
-    const handleSearchBar = (e) => {
-      e.preventDefault();
-      const searchValue = e.target.search.value;
-      axiosPublic.post(`/search-camps`)
-      .then(res => {
-         console.log(res.data);
-      })
-    }
+    // const handleSearchBar = (e) => {
+    //   e.preventDefault();
+    //   const searchValue = e.target.search.value;
+    //   axiosPublic.post(`/search-camps`)
+    //   .then(res => {
+    //      console.log(res.data);
+    //   })
+    // }
 
 
     return (
-        <div style={{ width: "80%", margin: "0 auto", marginBottom: '60px'}}>
+        <Box sx={{ width: {xs: '90%', lg: '80%'}, margin: "0 auto", marginBottom: '60px'}}>
         <Helmet>
         <title>Wellnex | Available Camps</title>
         </Helmet>
         <Box>
            <Box display={'flex'} alignItems={'center'} mt={'30px'} justifyContent={'space-between'}>
-             <form onSubmit={handleSearchBar} style={{border: '2px solid #03045E'}}>
-              <input style={{padding: '13px 15px', fontSize: '18px', border: 'none'}} type="text" name="search" id="" placeholder="Search camps" />
+             <Box sx={{display: {xs: 'none', lg:'block'}}} border={'2px solid #03045E'} component={'form'} variant="form">
+             <input style={{padding: '13px 15px', fontSize: '18px', border: 'none'}} type="text" name="search" id="" placeholder="Search camps" />
               <input style={{padding: '13px 20px', background: '#023E8A', fontSize: '18px', color: 'white', border: 'none'}} type="submit" value="Search" />
-             </form>
-             <Box sx={{ minWidth: 120 }}>
+             </Box>
+             <Box sx={{ minWidth: 120, display: {xs:'none', lg:'block'} }}>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Sort by</InputLabel>
               <Select
@@ -134,7 +134,7 @@ const AvailableCamps = () => {
           );
         })}
       </Grid>
-    </div>
+    </Box>
     );
 };
 

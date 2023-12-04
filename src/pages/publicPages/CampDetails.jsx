@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { Box, Button, Paper } from "@mui/material";
+import { Box, Button, Paper, Typography } from "@mui/material";
 import RegistrationModal from './shares/RegistrationModal';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useUserRole from '../../hooks/useUserRole';
@@ -25,15 +25,17 @@ const CampDetails = () => {
       });
       console.log(camp);
     return (
-        <div style={{width: '80%', margin: '0 auto'}}>
-            <Paper style={{width: '90%', margin: '0 auto', padding: '10px 20px', marginTop: '20px'}}>
-            <img style={{width: '100%', marginTop: '0px', height: '600px'}} src={camp?.image} alt="" />
-            <Box display={'flex'} mt={'10px'} justifyContent={'space-between'} alignItems={'center'}>
+        <Box sx={{width: {xs: '100%', lg: '80%'}, margin: '0 auto'}}>
+            <Paper style={{width: '95%', margin: '0 auto', padding: '10px 20px', marginTop: '20px'}}>
+            <Box sx={{height: {xs: 'auto', lg:'600px'}}}>
+            <img style={{width: '100%', marginTop: '0px', height: '100%'}} src={camp?.image} alt="" />
+            </Box>
+            <Box sx={{display: {sx: 'block', lg:'flex'}}} mt={'10px'} justifyContent={'space-between'} alignItems={'center'}>
             <h3 style={{fontSize: '32px', flex: '1', lineHeight: '150%'}}>{camp?.camp_name}</h3>
             <Button disabled={useRole?.userRole === 'Participants' ? false : true} onClick={handleOpen} size="large" variant="contained" sx={{bgcolor: '#c1121f', color: '#ffffff', fontWeight: '600', py: '12px','&:hover': {background: '#0096C7', color: '#ffffff'}}}>Join Camp</Button>
             </Box>
-            <p style={{fontSize: '20px', marginTop: '0px'}}>Fees: <span style={{fontWeight: '600'}}>$ {camp?.camp_fees}</span></p>
-            <Box display={'flex'} justifyContent={'space-between'}>
+            <Typography sx={{fontSize: '20px', marginTop: {xs: '20px', lg: '0px'}}}>Fees: <span style={{fontWeight: '600'}}>$ {camp?.camp_fees}</span></Typography>
+            <Box sx={{display: {xs: 'block', lg:'flex'}}} justifyContent={'space-between'}>
             <p style={{fontSize: '20px', fontWeight: '600'}}>Time: {moment(camp?.scheduled_date_time).format('LLL')}</p>
             <p style={{fontSize: '20px', fontWeight: '600'}}> Total Participants : {camp?.total_participants}</p>
             </Box>
@@ -62,7 +64,7 @@ const CampDetails = () => {
             <RegistrationModal open={open} handleClose={handleClose} fees={camp?.camp_fees} camp_name={camp?.camp_name} venue_location={camp?.venue_location} camp_fees={camp?.camp_fees} campId={camp?._id} camp_owner={camp?.campOwnerEmail} scheduled_date_time={camp?.scheduled_date_time} refetch={refetch}></RegistrationModal>
 
 
-        </div>
+        </Box>
     );
 };
 

@@ -8,10 +8,10 @@ import SendIcon from '@mui/icons-material/Send';
 import { Link } from 'react-router-dom';
 const Footer = () => {
     return (
-        <div style={{background: `url(${footerBg})`, position: 'relative', height: '420px', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
+        <Box sx={{background: `url(${footerBg})`, position: 'relative', height: {xs: '1000px', lg:'420px'}, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
             <div style={{position: 'absolute', left: '0', top: '0',background: 'linear-gradient(90deg, rgba(3,4,94,0.9276960784313726) 0%, rgba(0,150,199,0.9164915966386554) 47%, rgba(70,109,112,0.9753151260504201) 100%)', width: '100%', height: '100%'}}>
-                <div style={{width: '80%', margin: '0 auto', padding: '50px 0'}}>
-                <Box display={'flex'} sx={{py:'30px'}} justifyContent={'space-between'}>
+                <Box sx={{width: {xs: '95%', sm: '90%', lg: '80%'}, margin: '0 auto', padding: '50px 0'}}>
+                <Box sx={{py:'30px', display: {xs: 'block', lg: 'flex'}}} justifyContent={'space-between'}>
                 <Box>
                 <Box sx={{py: '10px', width: '300px'}}>
                   <Box display={'flex'} gap={'10px'} alignItems={'center'}>
@@ -55,9 +55,9 @@ const Footer = () => {
                 <Box textAlign={'center'} color={'white'} mt={'20px'}>
                     <Typography>© ALL Right Reserved By Mursalin 2023</Typography>
                 </Box>
-                </div>
+                </Box>
             </div>
-        </div>
+        </Box>
     );
 };
 

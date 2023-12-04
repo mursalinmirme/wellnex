@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 import { Link } from "react-router-dom";
+import moment from "moment/moment";
 
 const PopularCampusSection = () => {
   const axiosPublic = useAxiosPublic();
@@ -26,7 +27,7 @@ const PopularCampusSection = () => {
   });
   // console.log(popularComps);
   return (
-    <div style={{ width: "80%", margin: "0 auto" }}>
+    <Box sx={{ width: {xs: '95%', sm: '80%', lg: '80%'}, margin: "0 auto" }}>
       <Box textAlign={"center"} sx={{mt: '60px'}}>
         <Typography
           sx={{ fontSize: "32px", fontWeight: "600" }}
@@ -37,8 +38,8 @@ const PopularCampusSection = () => {
       <Grid container sx={{mt: '10px'}} spacing={4}>
         {popularComps?.map((camps) => {
           return (
-            <Grid key={camps?._id} item xs={12} md={6} lg={4}>
-              <Card sx={{ maxWidth: 430 }}>
+            <Grid key={camps?._id} item xs={12} sm={12} md={6} lg={4}>
+              <Card sx={{ maxWidth: {xs: 'auto', lg: 430} }}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
@@ -70,7 +71,7 @@ const PopularCampusSection = () => {
                     Specialized: {camps?.specialized_services[0]}
                     </Typography>
                     <Typography sx={{mt: '5px'}} variant="body1" color="text.secondary">
-                      Time: {camps?.scheduled_date_time}
+                      Time: {moment(camps?.scheduled_date_time).format('LLL')}
                     </Typography>
 
                   </CardContent>
@@ -88,7 +89,7 @@ const PopularCampusSection = () => {
         })}
       </Grid>
       <Grid display={'flex'} justifyContent={'center'} alignItems={'center'} mt={'40px'}><Link to={'/available_camp'}><Button variant={'contained'} sx={{bgcolor: '#023E8A', color: '#ffffff', fontWeight: '600', py: '10px','&:hover': {background: '#0096C7', color: '#ffffff'}}}>See All Camps</Button></Link></Grid>
-    </div>
+    </Box>
   );
 };
 

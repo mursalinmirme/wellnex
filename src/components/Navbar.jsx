@@ -76,7 +76,7 @@ const Navbar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <img style={{width: '30px', marginRight: '8px', borderRadius: '50%',}} src="./logo.png" alt="" />
+          <img className='websiteLogo' style={{width: '30px', marginRight: '8px', borderRadius: '50%',}} src="./logo.png" alt="" />
           <Typography
           width={'400px'}
             variant="h6"
@@ -123,15 +123,15 @@ const Navbar = () => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none', color: '$000000' },
+                display: { xs: 'block', md: 'none', color: 'red' },
               }}
             >
-                 <NavLink style={{textDecoration: 'none'}} to={'/'}>
+              <NavLink style={{textDecoration: 'none'}} to={'/'}>
               {({ isActive }) => (
                   <Button
                 className={isActive ? "activedfdfdfLinkNav" : ""}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: '#000000', display: 'block', width: '300px' }}
+                sx={{ my: 2, color: 'black', display: 'block' }}
               >
                 Home
               </Button>
@@ -142,60 +142,74 @@ const Navbar = () => {
                   <Button
                 className={isActive ? "activedfdfdfLinkNav" : ""}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: '#000000', display: 'block' }}
+                sx={{ my: 2, color: 'black', display: 'block' }}
               >
                 Available Camps
               </Button>
               )}
             </NavLink>
-
-              {
-                getRole?.userRole === 'Participants' && <NavLink style={{textDecoration: 'none'}} to={'/dashboar'}>
+            
+            {
+              getRole?.userRole === 'Participants' && 
+                <NavLink style={{textDecoration: 'none'}} to={'/dashboard/participant-profile'}>
                 {({ isActive }) => (
                     <Button
                   className={isActive ? "activedfdfdfLinkNav" : ""}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: '#000000', display: 'block' }}
+                  sx={{ my: 2, color: 'black', display: 'block' }}
                 >
                   Dashboard
                 </Button>
                 )}
-              </NavLink>
+               </NavLink>
               }
               {
-                getRole?.userRole === 'Organizers' && <NavLink style={{textDecoration: 'none'}} to={'/dashboar'}>
+                getRole?.userRole === 'Organizers' && 
+                <NavLink style={{textDecoration: 'none'}} to={'/dashboard/organizer-profile'}>
                 {({ isActive }) => (
                     <Button
                   className={isActive ? "activedfdfdfLinkNav" : ""}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: '#000000', display: 'block' }}
+                  sx={{ my: 2, color: 'black', display: 'block' }}
                 >
                   Dashboard
                 </Button>
                 )}
-              </NavLink>
+               </NavLink>
               }
               {
-                getRole?.userRole === 'Healthcare Professionals' && <NavLink style={{textDecoration: 'none'}} to={'/dashboar'}>
+                getRole?.userRole === 'Healthcare Professionals' && 
+                <NavLink style={{textDecoration: 'none'}} to={'/professional-dashboard'}>
                 {({ isActive }) => (
                     <Button
                   className={isActive ? "activedfdfdfLinkNav" : ""}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: '#000000', display: 'block' }}
+                  sx={{ my: 2, color: 'black', display: 'block' }}
                 >
                   Dashboard
                 </Button>
                 )}
-              </NavLink>
+               </NavLink>
               }
-
-              
+              {
+              !user?.email && <NavLink style={{textDecoration: 'none'}} to={'/dashboard'}>
+              {({ isActive }) => (
+                  <Button
+                className={isActive ? "activedfdfdfLinkNav" : ""}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'black', display: 'block' }}
+              >
+                Dashboard
+              </Button>
+              )}
+             </NavLink>
+            }
               <NavLink style={{textDecoration: 'none'}} to={'/contact_us'}>
               {({ isActive }) => (
                   <Button
                 className={isActive ? "activedfdfdfLinkNav" : ""}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: '#000000', display: 'block' }}
+                sx={{ my: 2, color: 'black', display: 'block' }}
               >
                 Contact Us
               </Button>
@@ -203,7 +217,7 @@ const Navbar = () => {
             </NavLink>
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
           <Typography
             variant="h5"
             noWrap

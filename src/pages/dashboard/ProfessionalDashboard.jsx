@@ -8,10 +8,10 @@ const ProfessionalDashboard = () => {
         <div style={{maxWidth: '1536px', margin: '0 auto'}}>
             <Navbar></Navbar>
             {/* sidebar */}
-                <Box display={'flex'} gap={'20px'} marginBottom={'20px'}>
-                <Box>
-                    <Paper style={{minHeight: '99%', width: '350px', padding: '10px', marginTop: '10px', marginBottom: '10px' ,background: '#023E8A', paddingTop: '30px'}}>
-                    <Box minHeight={'70vh'}>
+                <Box sx={{display: {xs: 'block', lg:'flex'}}} gap={'20px'} marginBottom={'20px'}>
+                <Box> 
+                    <Paper style={{minHeight: {xs: 'auto', lg:'99%'}, width: {xs: '100%', lg: '350px'}, padding: '10px', marginTop: '10px', marginBottom: '10px' ,background: '#023E8A', paddingTop: '30px'}}>
+                    <Box sx={{minHeight: {xs: 'auto', lg: '70vh'}}}>
                     <NavLink style={{textDecoration: 'none'}} to={'/professional-dashboard'}>
                           {({ isActive }) => (
                           <span

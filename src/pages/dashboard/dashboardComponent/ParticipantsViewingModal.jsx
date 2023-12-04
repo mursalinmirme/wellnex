@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../../hooks/useAuth';
 import { Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@mui/material';
 import moment from 'moment';
+import Swal from 'sweetalert2';
 
 const style = {
   position: 'absolute',
@@ -21,7 +22,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const ParticipantsViewingModal = ({upCampId, open, handleClose}) => {
+const ParticipantsViewingModal = ({upCampId, open, handleClose, refetch}) => {
   const {user} = useAuth();
   const axiosSecure = useAxiosSecure();
   const {data=[]} = useQuery({
@@ -33,6 +34,38 @@ const ParticipantsViewingModal = ({upCampId, open, handleClose}) => {
       }
   })
   console.log('from check',data);
+
+
+    // const handleConfirmation = (acptId) => {
+    //     Swal.fire({
+    //         title: "Are you sure?",
+    //         text: "You want to confirmed the registration!",
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#3085d6",
+    //         cancelButtonColor: "#d33",
+    //         confirmButtonText: "Yes, delete it!"
+    //       }).then((result) => {
+
+    //         if (result.isConfirmed) {
+    //             axiosSecure.patch(`/payment-status/${acptId}`)
+    //             .then(res => {
+    //             if(res.data.operatonStatus === 'success'){
+    //             refetch()
+    //             Swal.fire({
+    //                 title: "Deleted!",
+    //                 text: "Registration confirmation successfully!",
+    //                 icon: "success"
+    //               });
+    //              }
+    //             })
+              
+    //         }
+    //       });
+        
+    // }
+
+
 
 
   const columns = [
@@ -64,8 +97,8 @@ const ParticipantsViewingModal = ({upCampId, open, handleClose}) => {
     {
         header: 'Action',
         accessorKey: '_id',
-        cell: ({value, rows}) => (
-           <Button variant='contained'>Accept</Button>
+        cell: ({value, row}) => (
+           <Button onClick={() => handleConfirmation(row.original._id)} variant='contained'>Accept</Button>
         )
         
     },

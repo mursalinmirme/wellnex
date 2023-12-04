@@ -116,7 +116,7 @@ const RegisteredCamps = () => {
     })
 
     return (
-        <Box>
+        <Box sx={{width: '100%', overflowX: {xs: 'scroll', lg: 'hidden'}}}>
         <Helmet>
             <title>Wellnex | Dashboard | Registered Camps</title>
         </Helmet>

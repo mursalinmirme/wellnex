@@ -143,7 +143,7 @@ const ManageRegisteredPage = () => {
         onSortingChange: setSorting
     })
     return (
-        <Box>
+        <Box sx={{width: '100%', overflowX: {xs: 'scroll', lg: 'hidden'}}}>
             <Helmet>
         <title>Wellnex | Dashboard | manage camps</title>
            </Helmet>

@@ -9,11 +9,13 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 900,
+  width: {xs: '90%', lg: 900},
+  height: {xs: '100vh', lg: 'auto'},
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
+
 };
 const UpdateModalForm = ({open, handleClose, age, phone, gender, address, bio, link, role, refetch}) => {
     console.log('The user gender is ', gender);

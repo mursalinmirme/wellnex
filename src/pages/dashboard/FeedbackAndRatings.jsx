@@ -168,7 +168,7 @@ const FeedbackAndRatings = () => {
 
 
     return (
-        <Box>
+        <Box sx={{width: '100%', overflowX: {xs: 'scroll', lg: 'hidden'}}}>
           <Helmet>
             <title>Wellnex | Dashboard | Feedback</title>
           </Helmet>

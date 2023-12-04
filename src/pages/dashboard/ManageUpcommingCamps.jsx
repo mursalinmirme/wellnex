@@ -12,6 +12,7 @@ import { useState } from "react";
 import ParticipantsViewingModal from "./dashboardComponent/ParticipantsViewingModal";
 import ProfListView from "./dashboardComponent/ProfListView";
 import UpcommingCampsUpdateModal from "./dashboardComponent/UpcommingCampsUpdateModal";
+import { Tune } from "@mui/icons-material";
 const ManageUpcommingCamps = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
@@ -19,6 +20,7 @@ const ManageUpcommingCamps = () => {
     const [open, setOpen] = React.useState(false);
     const [upCampId, setupCampId] = useState('');
     const [profCampId, setProfCampId] = useState('');
+    const [savUpdateId, setSavUpdateId] = useState('');
     const handleOpen = (upCampId) => {
         setupCampId(upCampId)
         setOpen(true);
@@ -35,13 +37,12 @@ const ManageUpcommingCamps = () => {
 
     // actions modal for professionals list
     const [openUpdateUpCams, setopenUpdateUpCams] = React.useState(false);
-    const handleUpCampsUpdate = () => setopenUpdateUpCams(true);
+    const handleUpCampsUpdate = (updateId) => {
+        setopenUpdateUpCams(true);
+        setSavUpdateId(updateId);
+    };
     const handleCloseUpdateCams = () => setopenUpdateUpCams(false);
 
-
-    const handleUpCampsDelete = () => {
-        alert('delete btn clicked')
-    }
 
     const handleUpcommingPublish = () => {
         alert('published btn clicked')
@@ -55,64 +56,37 @@ const ManageUpcommingCamps = () => {
         }
     })
     console.log(data);
-    // const handleConfirmation = (regId) => {
-    //     Swal.fire({
-    //         title: "Are you sure?",
-    //         text: "You want to confirmed the registration!",
-    //         icon: "warning",
-    //         showCancelButton: true,
-    //         confirmButtonColor: "#3085d6",
-    //         cancelButtonColor: "#d33",
-    //         confirmButtonText: "Yes, delete it!"
-    //       }).then((result) => {
 
-    //         if (result.isConfirmed) {
-    //             axiosSecure.patch(`/payment-status/${regId}`)
-    //             .then(res => {
-    //             if(res.data.operatonStatus === 'success'){
-    //             refetch()
-    //             Swal.fire({
-    //                 title: "Deleted!",
-    //                 text: "Registration confirmation successfully!",
-    //                 icon: "success"
-    //               });
-    //              }
-    //             })
+
+    const handleDeleteRegisteredCamps = (deleteId) => {
+        console.log('delete id is', deleteId);
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want to delete the participant registered camp!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+          }).then((result) => {
+
+            if (result.isConfirmed) {
+                axiosSecure.delete(`/upcomming-camp-Delete/${deleteId}`)
+                .then(res => {
+                    console.log(res.data);
+                if(res.data.acknowledged){
+                refetch()
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Registration cancellision successfully!",
+                    icon: "success"
+                  });
+                 }
+                })
               
-    //         }
-    //       });
-        
-    // }
-
-    // const handleDeleteRegisteredCamps = (deleteId) => {
-    //     console.log('delete id is', deleteId);
-    //     Swal.fire({
-    //         title: "Are you sure?",
-    //         text: "You want to delete the participant registered camp!",
-    //         icon: "warning",
-    //         showCancelButton: true,
-    //         confirmButtonColor: "#3085d6",
-    //         cancelButtonColor: "#d33",
-    //         confirmButtonText: "Yes, delete it!"
-    //       }).then((result) => {
-
-    //         if (result.isConfirmed) {
-    //             axiosSecure.delete(`/participant-register-camp/${deleteId}`)
-    //             .then(res => {
-    //                 console.log(res.data);
-    //             if(res.data.acknowledged){
-    //             refetch()
-    //             Swal.fire({
-    //                 title: "Deleted!",
-    //                 text: "Registration cancellision successfully!",
-    //                 icon: "success"
-    //               });
-    //              }
-    //             })
-              
-    //         }
-    //       });
-    // }
+            }
+          });
+    }
 
 
 
@@ -151,9 +125,9 @@ const ManageUpcommingCamps = () => {
                 <Box display={'flex'} flexDirection={'column'} gap={'10px'}>
                     <Button onClick={() => handleOpen(row.original?._id)} sx={{background: '#023E8A'}} variant="contained" size="small">Review Participants</Button>
                     <Button onClick={() => handleOpenProfessional(row.original?._id)} sx={{background: '#023E8A'}} variant="contained" size="small">Review Professionals</Button>
-                    <Button onClick={handleUpcommingPublish} sx={{background: '#90E0EF', color: 'black', fontWeight: '600'}} variant="contained" size="small">Publish</Button>
-                    <Button onClick={handleUpCampsUpdate} sx={{background: '#90E0EF', color: 'black', fontWeight: '600'}} variant="contained" size="small">Update</Button>
-                    <Button onClick={handleUpCampsDelete} sx={{background: 'red'}} variant="contained" size="small">Delete</Button>
+                    <Button disabled={row.original.total_participants > 9 && row.original.total_interests > 2 ? false : true} onClick={handleUpcommingPublish} sx={{background: '#90E0EF', color: 'black', fontWeight: '600'}} variant="contained" size="small">Publish</Button>
+                    <Button onClick={() => handleUpCampsUpdate(row.original?._id)} sx={{background: '#90E0EF', color: 'black', fontWeight: '600'}} variant="contained" size="small">Update</Button>
+                    <Button onClick={() => handleDeleteRegisteredCamps(row.original?._id)} sx={{background: 'red'}} variant="contained" size="small">Delete</Button>
                 </Box>
             )
         },
@@ -178,7 +152,7 @@ const ManageUpcommingCamps = () => {
         onSortingChange: setSorting
     })
     return (
-        <Box>
+        <Box sx={{width: '100%', overflowX: {xs: 'scroll', lg: 'hidden'}}}>
             <Helmet>
         <title>Wellnex | Dashboard | manage camps</title>
            </Helmet>
@@ -234,12 +208,12 @@ const ManageUpcommingCamps = () => {
             >Next Page</Button>
             </Box>
 
-            {open &&<ParticipantsViewingModal upCampId={upCampId} open={open} handleClose={handleClose}></ParticipantsViewingModal>}
+            {open &&<ParticipantsViewingModal refetch={refetch} upCampId={upCampId} open={open} handleClose={handleClose}></ParticipantsViewingModal>}
 
-           {openProf && <ProfListView profCampId={profCampId} openProf={openProf} handleCloseProfList={handleCloseProfList}></ProfListView>}
+           {openProf && <ProfListView profCampId={profCampId} openProf={openProf} handleCloseProfList={handleCloseProfList} refetch={refetch}></ProfListView>}
 
 
-           <UpcommingCampsUpdateModal updateId={'djfdkjf'} openUpdateUpCams={openUpdateUpCams} handleCloseUpdateCams={handleCloseUpdateCams} refetch={refetch}></UpcommingCampsUpdateModal>
+           {openUpdateUpCams && <UpcommingCampsUpdateModal savUpdateId={savUpdateId} openUpdateUpCams={openUpdateUpCams} handleCloseUpdateCams={handleCloseUpdateCams} refetch={refetch}></UpcommingCampsUpdateModal>}
 
 
 

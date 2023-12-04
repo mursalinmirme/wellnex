@@ -80,7 +80,7 @@ const PaymentHistory = () => {
     })
 
     return (
-        <Box>
+        <Box sx={{width: '100%', overflowX: {xs: 'scroll', lg: 'hidden'}}}>
         <Helmet>
             <title>Wellnex | Dashboard | Payment History</title>
         </Helmet>

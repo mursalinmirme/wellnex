@@ -8,6 +8,9 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
 import { Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@mui/material';
+import Swal from 'sweetalert2';
+import { Tune } from '@mui/icons-material';
+import toast from 'react-hot-toast';
 
 const style = {
   position: 'absolute',
@@ -20,7 +23,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const ProfListView = ({profCampId, openProf, handleCloseProfList}) => {
+const ProfListView = ({refetch, profCampId, openProf, handleCloseProfList}) => {
   const [filtering, setFiltering] = React.useState('');
 const [sorting, setSorting] = React.useState([]);
 const {user} = useAuth();
@@ -34,7 +37,16 @@ const {data=[]} = useQuery({
     }
 })
 console.log('prof obj',data);
-
+const handleConfirmation = (acptId) => {
+    axiosSecure.patch(`/professional-acceptions/${acptId}`)
+    .then(res => {
+    if(res.data.operatonStatus === 'success'){
+    refetch()
+      toast.success("Professiona accepted successfully!")
+     }
+    })
+    
+}
 
 const columns = [
   {
@@ -56,8 +68,8 @@ const columns = [
   {
       header: 'Action',
       accessorKey: '_id',
-      cell: ({value, rows}) => (
-         <Button variant='contained'>Accept Professional</Button>
+      cell: ({value, row}) => (
+         <Button disabled={row.original.status === "Confirmed" ? true : false} onClick={() => handleConfirmation(row?.original._id)} variant='contained'>{row.original.status === "Confirmed" ? "Confirmed" : "Accept Professional"}</Button>
       )
       
   },

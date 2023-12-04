@@ -67,7 +67,7 @@ const Signin = () => {
 
       };
     return (
-        <div style={{width: '80%', margin: '0 auto', marginTop: '40px', marginBottom: '60px'}}>
+        <Box sx={{width: {xs: '95%', lg:'80%'}, margin: '0 auto', marginTop: '40px', marginBottom: '60px'}}>
               <Helmet>
                 <title>Wellnex | Login</title>
               </Helmet>
@@ -159,7 +159,7 @@ const Signin = () => {
           </Box>
         </Grid>
         </Grid>
-        </div>
+        </Box>
     );
 };
 
