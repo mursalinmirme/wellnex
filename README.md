@@ -1,6 +1,5 @@
 <b>Project Name: Wellnex</b>
 <br>
-<p>Credentials: optional </p>
 <P>Live Link: https://wellnexs.web.app/</p>
 <b>Five Project Features</b>
 <br>
