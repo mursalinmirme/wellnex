@@ -171,7 +171,7 @@ const AddaCampPage = () => {
           {uploadLoading ? <CircularProgress size={'32px'} style={{color: 'white'}}></CircularProgress> : 'Submit Camp'}
         </Button>
 
-    </form>
+        </form>
         </Box>
     </Paper>
   )

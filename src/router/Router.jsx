@@ -27,6 +27,11 @@ import UpcommingCampsDetails from "../pages/publicPages/UpcommingCampsDetails";
 import ManageUpcommingCamps from "../pages/dashboard/ManageUpcommingCamps";
 import ProfessionalDashboard from "../pages/dashboard/ProfessionalDashboard";
 import AcceptedCamps from "../pages/dashboard/AcceptedCamps";
+import ManageUsers from "../pages/dashboard/ManageUsers";
+import AddBlog from "../pages/dashboard/AddBlog";
+import ManageBlogs from "../pages/dashboard/ManageBlogs";
+import AdminDashboard from "../pages/dashboard/AdminDashboard";
+import AdminRouter from "../privateRouter/AdminRouter";
 
 const router = createBrowserRouter([
     {
@@ -115,16 +120,6 @@ const router = createBrowserRouter([
             },
         ]
     },
-    // {
-    //     path: 'professional-profile', 
-    //     element: <PrivateRouter><ProfessionalHealthCareRoute><ProfessionalsProfile></ProfessionalsProfile></ProfessionalHealthCareRoute></PrivateRouter>,
-    //     errorElement: <ErrorPage></ErrorPage>,
-    //     children:[
-    //         {
-                
-    //         }
-    //     ]
-    // }
     {
         path: '', 
         element: <PrivateRouter><ProfessionalHealthCareRoute><ProfessionalDashboard></ProfessionalDashboard></ProfessionalHealthCareRoute></PrivateRouter>,
@@ -137,6 +132,25 @@ const router = createBrowserRouter([
             {
                 path: 'accepted-camps',
                 element: <PrivateRouter><ProfessionalHealthCareRoute><AcceptedCamps></AcceptedCamps></ProfessionalHealthCareRoute></PrivateRouter>,
+            },
+        ]
+    },
+    {
+        path: '', 
+        element: <PrivateRouter><AdminRouter><AdminDashboard></AdminDashboard></AdminRouter></PrivateRouter>,
+        errorElement: <ErrorPage></ErrorPage>,
+        children:[
+            {
+                path: 'manage-users',
+                element: <PrivateRouter><AdminRouter><ManageUsers></ManageUsers></AdminRouter></PrivateRouter>,
+            },
+            {
+                path: 'Add-Blog',
+                element: <PrivateRouter><AdminRouter><AddBlog></AddBlog></AdminRouter></PrivateRouter>,
+            },
+            {
+                path: 'manage-blogs',
+                element: <PrivateRouter><AdminRouter><ManageBlogs></ManageBlogs></AdminRouter></PrivateRouter>,
             },
         ]
     }

@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 import { Image } from "@mui/icons-material";
+import moment from "moment";
 
 const WellnessBlogs = () => {
     const axiosPublic = useAxiosPublic();
@@ -37,7 +38,7 @@ const WellnessBlogs = () => {
                           <Typography sx={{fontSize: '20px', fontWeight: '700'}}>{blog?.title}</Typography>
                           <Typography sx={{mt: '10px'}} variant="body1">{blog?.content.length > 120 ? blog.content.slice(0, 120) + '...' : blog.content}</Typography>
                           <Typography sx={{mt: '10px', fontWeight: '600'}} variant="body1">Author: {blog?.author}</Typography>
-                          <Typography sx={{mt: '10px'}} variant="body1">2023-07-28</Typography>
+                          <Typography sx={{mt: '10px'}} variant="body1">{moment(blog?.date).format('LL')}</Typography>
                           <Box textAlign={'right'}>
                           <Button sx={{bgcolor: '#0077B6', color: '#ffffff', fontWeight: '600', py: '8px','&:hover': {background: '#0096C7', color: '#ffffff'}}} variant="contained">Read More</Button>
                           </Box>

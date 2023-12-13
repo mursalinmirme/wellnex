@@ -140,6 +140,13 @@ const Signup = () => {
                           toast.success("Registration successfull");
                           return navigate("/professional-dashboard");
                         }
+                        if (
+                          roleResp.data.userRole === "admin"
+                        ) {
+                          setCreatLoading(false);
+                          toast.success("Registration successfull");
+                          return navigate("/manage-users");
+                        }
                       })
                       .catch((rollErr) => {
                         setCreatLoading(false);

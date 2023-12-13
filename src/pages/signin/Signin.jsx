@@ -56,6 +56,9 @@ const Signin = () => {
                   if(res.data.userRole === "Healthcare Professionals"){
                    return navigate('/professional-dashboard');
                   }
+                  if(res.data.userRole === "admin"){
+                   return navigate('/manage-users');
+                  }
           })
 
         }catch(error){

@@ -43,6 +43,7 @@ const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const getRole = useUserRole();
+  console.log(getRole);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -147,10 +148,23 @@ const Navbar = () => {
               </Button>
               )}
             </NavLink>
-            
             {
               getRole?.userRole === 'Participants' && 
                 <NavLink style={{textDecoration: 'none'}} to={'/dashboard/participant-profile'}>
+                {({ isActive }) => (
+                    <Button
+                  className={isActive ? "activedfdfdfLinkNav" : ""}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'black', display: 'block' }}
+                >
+                  Dashboard
+                </Button>
+                )}
+               </NavLink>
+              }
+            {
+              getRole?.userRole === 'admin' && 
+                <NavLink style={{textDecoration: 'none'}} to={'/manage-users'}>
                 {({ isActive }) => (
                     <Button
                   className={isActive ? "activedfdfdfLinkNav" : ""}
@@ -292,6 +306,20 @@ const Navbar = () => {
               {
                 user?.photoURL && getRole?.userRole === 'Healthcare Professionals' && 
                 <NavLink style={{textDecoration: 'none'}} to={'/professional-dashboard'}>
+                {({ isActive }) => (
+                    <Button
+                  className={isActive ? "activedfdfdfLinkNav" : ""}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Dashboard
+                </Button>
+                )}
+               </NavLink>
+              }
+              {
+                user?.photoURL && getRole?.userRole === 'admin' && 
+                <NavLink style={{textDecoration: 'none'}} to={'/manage-users'}>
                 {({ isActive }) => (
                     <Button
                   className={isActive ? "activedfdfdfLinkNav" : ""}
